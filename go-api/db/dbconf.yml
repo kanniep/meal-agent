@@ -1,0 +1,11 @@
+development:
+  driver: postgres
+  open: user=kannie dbname=meal_agent_dev sslmode=disable
+
+test:
+  driver: postgres
+  open: user=kannie dbname=meal_agent_test sslmode=disable
+
+production:
+  driver: postgres
+  open: user=kannie dbname=meal_agent sslmode=disable
