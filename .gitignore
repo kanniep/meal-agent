@@ -8,20 +8,20 @@
 /.bundle
 
 # Ignore all logfiles and tempfiles.
-/log/*
-/tmp/*
-!/log/.keep
-!/tmp/.keep
+rails-api/log/*
+rails-api/tmp/*
+!/rails-api/log/.keep
+!/rails-api/tmp/.keep
 
 # Ignore uploaded files in development
-/storage/*
-!/storage/.keep
+rails-api/storage/*
+!/rails-api/storage/.keep
 
 /node_modules
-/yarn-error.log
+rails-api/yarn-error.log
 
 /public/assets
-.byebug_history
+rails-api/.byebug_history
 
 # Ignore master key for decrypting credentials and more.
-/config/master.key
+rails-api/config/master.key
