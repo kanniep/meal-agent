@@ -1,27 +1,24 @@
-Feature: Admin
+Feature: User
 
 e.t.
 
-Scenario: Admin look at registered users
+Scenario: User signup success
 
-  The admin should be able to see registered users
+  The user should be able to signup
 
-  Given there are 2 users
-  And I am an admin
-  And I am logged in
-  And I want to add a course offering
-  When I visit users page
-  Then I should see an user number 1
-  And I should see an user number 2
-  And I should see number of users is equal to 2
+  Given I am a new user
+  And I visit registration page
+  And I fill in my information
+  When I click "submit" button
+  Then I should be in meals page
 
-Scenario: Admin ban a user
+Scenario: User signup fail
 
-  The instructor should be able to edit a course offering
+  The user should not be able to signup if their information are invalid
 
-  Given there are 2 customers
-  And I am an admin
-  And I am logged in
-  When I ban customer number 1
-  Then I should see user number 1 is baned
-  And I should see user number 2 is not baned
+  Given I am a new user
+  And I visit registration page
+  And I fill in email incorrectly
+  When I click "submit" button
+  Then I should be in signup page
+  And I should see "Invalid email"
