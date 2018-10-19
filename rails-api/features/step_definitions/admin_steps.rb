@@ -1,7 +1,3 @@
-Given("there are {int} users") do |int|
-  pending # Write code here that turns the phrase above into concrete actions
-end
-
 Given("I am an admin") do
   pending # Write code here that turns the phrase above into concrete actions
 end

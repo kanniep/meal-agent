@@ -254,6 +254,7 @@ DEPENDENCIES
   bootsnap (>= 1.1.0)
   byebug
   cancancan
+  capybara
   coffee-rails (~> 4.2)
   cucumber-rails
   database_cleaner
