@@ -52,3 +52,15 @@ Scenario: User signin fail
   And I fill in wrong password
   When I click "Log in" button
   Then I should see "Invalid Email or password"
+
+Scenario: User got banned
+
+  The user should not be able to signin if they got banned
+
+  Given I am an user
+  And I got banned
+  When I visit root page
+  Then I should be on the "users sign_in" page
+  And I fill in my email and password
+  When I click "Log in" button
+  Then I should see "You got banned"

@@ -19,7 +19,7 @@ And("I visit root page") do
 end
 
 And("I visit {string} page") do |page_name|
-  visit "#{page_name.downcase.gsub(' ','_')}_path"
+  visit "/#{page_name.downcase.gsub(' ','/')}"
 end
 
 And("I fill in my information") do
@@ -62,4 +62,9 @@ end
 
 And("I should see {string}") do |string|
   expect(page).to have_content string
+end
+
+And("I got banned") do
+  @user.active = false
+  @user.save
 end

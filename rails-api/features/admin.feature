@@ -6,22 +6,21 @@ Scenario: Admin look at registered users
 
   The admin should be able to see registered users
 
-  Given there are 2 users
+  Given there are 2 customers
   And I am an admin
   And I am logged in
-  And I want to add a course offering
-  When I visit users page
-  Then I should see an user number 1
-  And I should see an user number 2
-  And I should see number of users is equal to 2
+  When I visit "admin user" page
+  Then I should see multiple users
+  And I should see "4 users"
 
 Scenario: Admin ban a user
 
-  The instructor should be able to edit a course offering
+  The admin should be able to bad a registered user
 
   Given there are 2 customers
   And I am an admin
   And I am logged in
+  And I visit "admin user" page
   When I ban customer number 1
   Then I should see user number 1 is baned
-  And I should see user number 2 is not bane
+  And I should see user number 2 is not baned

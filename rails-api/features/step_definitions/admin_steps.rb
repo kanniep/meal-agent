@@ -1,39 +1,43 @@
 Given("I am an admin") do
-  pending # Write code here that turns the phrase above into concrete actions
+  @admin = FactoryBot.create :admin
+end
+
+Given(/^there are (\d+) customers$/) do |users_num|
+  @users = []
+  users_num.to_i.times do
+    user = FactoryBot.create :user
+    @users.append(user)
+  end
 end
 
 Given("I am logged in") do
-  pending # Write code here that turns the phrase above into concrete actions
+  visit root_path
+  fill_in 'Email', with: @admin.email
+  fill_in 'Password', with: @admin.password
+  click_button "Log in"
 end
 
-Given("I want to add a course offering") do
-  pending # Write code here that turns the phrase above into concrete actions
-end
-
-When("I visit users page") do
-  pending # Write code here that turns the phrase above into concrete actions
-end
-
-Then("I should see an user number {int}") do |int|
-  pending # Write code here that turns the phrase above into concrete actions
-end
-
-Then("I should see number of users is equal to {int}") do |int|
-  pending # Write code here that turns the phrase above into concrete actions
-end
-
-Given("there are {int} customers") do |int|
-  pending # Write code here that turns the phrase above into concrete actions
+Given("I should see multiple users") do
+  expect(page).to have_css 'tr.user_row'
 end
 
 When("I ban customer number {int}") do |int|
-  pending # Write code here that turns the phrase above into concrete actions
+  find("tr.user_row"){ |tr| tr.find("td.id_field").text == @users[int - 1].id.to_s }
+    .find('li.edit_member_link a').click
+  find("div.checkbox input#user_active").set false
+  click_button "Save"
 end
 
 Then("I should see user number {int} is baned") do |int|
-  pending # Write code here that turns the phrase above into concrete actions
+  find("tr.user_row"){ |tr| tr.find("td.id_field").text == @users[int - 1].id.to_s }
+    .find('li.edit_member_link a').click
+  expect(find("div.checkbox input#user_active")).not_to be_checked
+  click_button "Cancel"
 end
 
-Then("I should see user number {int} is not bane") do |int|
-  pending # Write code here that turns the phrase above into concrete actions
+Then("I should see user number {int} is not baned") do |int|
+  find("tr.user_row"){ |tr| tr.find("td.id_field").text == @users[int - 1].id.to_s }
+    .find('li.edit_member_link a').click
+  expect(find("div.checkbox input#user_active")).to be_checked
+  click_button "Cancel"
 end

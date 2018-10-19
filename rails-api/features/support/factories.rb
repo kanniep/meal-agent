@@ -10,7 +10,7 @@ FactoryBot.define do
 
   factory :user, class: User do
     sequence :email do |n|
-      "chashier#{n}@ait.asia"
+      "customer#{n}@ait.asia"
     end
     password {"password"}
     password_confirmation {"password"}
