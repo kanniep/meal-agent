@@ -1,0 +1,9 @@
+MetricFu::Configuration.run do |config|
+  config.configure_metrics.each do |metric|
+    if [:reek, :flog].include?(metric.name)
+      metric.enabled = false
+    else
+      metric.enabled = true
+    end
+  end
+end

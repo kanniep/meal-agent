@@ -1,0 +1,96 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Automate provisioning of CodeBuild
+Parameters:
+  EmailAddress:
+    Type: String
+    Default: st120367@ait.asia
+  DBUrl:
+    Type: String
+    Default: '35.197.150.136'
+  DBPassword:
+    Type: String
+  DBPort:
+    Type: String
+    Default: 5432
+  DockerUsername:
+    Type: String
+    Default: kannie
+  DockerPassword:
+    Type: String
+Resources:
+  CodeBuildRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          Effect: Allow
+          Principal:
+            Service: codebuild.amazonaws.com
+          Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AdministratorAccess
+  MealAgentCodeBuildProject:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Artifacts:
+        Type: NO_ARTIFACTS
+      Source:
+        Location: https://github.com/kanniep/meal-agent.git
+        Type: "GITHUB"
+        BuildSpec: |
+          version: 0.2
+          phases:
+            install:
+              commands:
+                - apt-get update -y
+                - apt-get install -y awscli
+            pre_build:
+              commands:
+                - git checkout rails-api
+                - cd rails-api
+                - bundle install
+                - RAILS_ENV=test bundle exec rake db:create db:migrate
+                - bundle exed cucumber
+                - bundle exec rake metrics:all
+            build:
+              commands:
+                - cp -r tmp/metric_fu ~/web18-01/current/public/
+                - docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
+                - docker build -t kannie/meal-agent-rails --build-arg database_url=${DATABASE_URL} \
+                    --build-arg database_password=${DATABASE_PASSWORD} --build-arg database_port=${DATABASE_PORT} .
+            post_build:
+              commands:
+                - cd ../iac/
+                - aws cloudformation deploy --template-file ecs-template.yaml \
+                    --stack-name ECS-MealAgent --parameter-overrides VpcId=vpc-dd3a1cba \
+                    KeyName=kantapon-aws SubnetId=subnet-689c970f,subnet-1e261d57 \
+                    DBUrl=${DATABASE_URL} DBPassword=${DATABASE_PASSWORD} \
+                    --capabilities CAPABILITY_IAM
+      Environment:
+        ComputeType: "BUILD_GENERAL1_SMALL"
+        Image: "aws/codebuild/ruby:2.5.1"
+        Type: "LINUX_CONTAINER"
+        EnvironmentVariables:
+          - Name: DATABASE_URL
+            Type: PLAINTEXT
+            Value: !Ref DBUrl
+          - Name: DATABASE_PASSWORD
+            Type: PLAINTEXT
+            Value: !Ref DBPassword
+          - Name: DATABASE_PORT
+            Type: PLAINTEXT
+            Value: !Ref DBPort
+          - Name: DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL
+            Type: PLAINTEXT
+            Value: true
+          - Name: DOCKER_USERNAME
+            Type: PLAINTEXT
+            Value: !Ref DockerUsername
+          - Name: DOCKER_PASSWORD
+            Type: PLAINTEXT
+            Value: !Ref DockerPassword
+      Name: !Sub ${AWS::StackName}-meal-agent-ci
+      Description: rspec, cucumber and metric_fu
+      ServiceRole: !Ref CodeBuildRole
+      TimeoutInMinutes: 60
