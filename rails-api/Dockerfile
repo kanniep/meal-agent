@@ -22,6 +22,7 @@ RUN bundle config --global frozen 1
 RUN bundle install --without development test
 
 COPY . /usr/src/app
+RUN bundle exec rake assets:precompile
 RUN chmod +x docker-entry.sh
 
 EXPOSE 3000

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'ping', to: 'health_check#ping'
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   resources :meals
   resources :shops
