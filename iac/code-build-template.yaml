@@ -50,12 +50,12 @@ Resources:
                 - git checkout rails-api
                 - cd rails-api
                 - bundle install
-                - RAILS_ENV=test bundle exec rake db:create db:migrate
-                - bundle exed cucumber
+                - RAILS_ENV=test bundle exec rake db:migrate
+                - bundle exec cucumber
                 - bundle exec rake metrics:all
             build:
               commands:
-                - cp -r tmp/metric_fu ~/web18-01/current/public/
+                - cp -r tmp/metric_fu public/
                 - docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
                 - docker build -t kannie/meal-agent-rails --build-arg database_url=${DATABASE_URL} \
                     --build-arg database_password=${DATABASE_PASSWORD} --build-arg database_port=${DATABASE_PORT} .
