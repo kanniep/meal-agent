@@ -251,7 +251,7 @@ Resources:
           - Effect: Allow
             Action: ['elasticloadbalancing:DeregisterInstancesFromLoadBalancer', 'elasticloadbalancing:DeregisterTargets',
               'elasticloadbalancing:Describe*', 'elasticloadbalancing:RegisterInstancesWithLoadBalancer',
-              'elasticloadbalancing:RegisterTargets', 'ec2:Describe*', 'ec2:AuthorizeSecurityGroupIngress']
+              'elasticloadbalancing:RegisterTargets', 'ec2:Describe*', 'ec2:AuthorizeSecurityGroupIngress', 'ecr:*']
             Resource: '*'
   ServiceScalingTarget:
     Type: AWS::ApplicationAutoScaling::ScalableTarget
