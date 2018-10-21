@@ -127,7 +127,7 @@ Resources:
         # Memory: '300'
         MemoryReservation: '300'
         Essential: 'true'
-        Image: kannie/meal-agent-rails:latest
+        Image: 917443201129.dkr.ecr.ap-southeast-1.amazonaws.com/meal-agent-rails
         LogConfiguration:
           LogDriver: awslogs
           Options:
