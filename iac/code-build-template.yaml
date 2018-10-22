@@ -40,7 +40,6 @@ Resources:
           phases:
             install:
               commands:
-                - git checkout rails-api
                 - cd rails-api
                 - bundle install
             pre_build:
