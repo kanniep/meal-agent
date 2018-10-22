@@ -15,6 +15,34 @@ Parameters:
   MasterKey:
     Type: String
 Resources:
+  CodeBuildSNS:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: meal-agent-codebuild-notification
+      Subscription:
+        - Endpoint: st120367@ait.asia
+          Protocol: email-json
+  CodeBuildNotification:
+    Type: AWS::Events::Rule
+    Properties:
+      Description: "EventRule"
+      EventPattern:
+        source:
+          - "aws.codebuild"
+        detail-type:
+          - "CodeBuild Build State Change"
+        detail:
+          build-status:
+            - "SUCCEEDED"
+            - "FAILED"
+        project-name:
+          - !Sub ${AWS::StackName}-meal-agent-ci
+      State: "ENABLED"
+      Targets:
+      -
+        Arn:
+          Ref: "CodeBuildSNS"
+        Id: "OpsTopic"
   CodeBuildRole:
     Type: AWS::IAM::Role
     Properties:
