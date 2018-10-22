@@ -58,6 +58,7 @@ Resources:
   MealAgentCodeBuildProject:
     Type: AWS::CodeBuild::Project
     Properties:
+      BadgeEnabled: true
       Artifacts:
         Type: NO_ARTIFACTS
       Source:
