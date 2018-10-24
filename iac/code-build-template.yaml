@@ -87,7 +87,7 @@ Resources:
             post_build:
               commands:
                 - cd ../iac/
-                - aws cloudformation deploy --template-file ecs-template.yaml --stack-name ECS-MealAgent --parameter-overrides VpcId=vpc-dd3a1cba KeyName=kantapon-aws SubnetId=subnet-689c970f,subnet-1e261d57 DBUrl=${DATABASE_URL} DBPassword=${DATABASE_PASSWORD} --ImageTag=${CODEBUILD_BUILD_ID} --capabilities CAPABILITY_IAM --no-fail-on-empty-changeset
+                - aws cloudformation deploy --template-file ecs-template.yaml --stack-name ECS-MealAgent --parameter-overrides VpcId=vpc-dd3a1cba KeyName=kantapon-aws SubnetId=subnet-689c970f,subnet-1e261d57 DBUrl=${DATABASE_URL} DBPassword=${DATABASE_PASSWORD} ImageTag=${revision} --capabilities CAPABILITY_IAM --no-fail-on-empty-changeset
       Environment:
         ComputeType: "BUILD_GENERAL1_SMALL"
         Image: "aws/codebuild/ruby:2.5.1"
