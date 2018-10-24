@@ -22,5 +22,15 @@ RSpec.describe User, type: :model do
         expect(shop_owner.shop_owner?).to be true
       end.not_to raise_error
     end
+
+    it 'have roles before create' do
+      shop_owner_role = roles(:shop_owner_role)
+      shop_owner = User.new( email: 'st120367@ait.asia', password: 'dummyyyyyy', roles: [shop_owner_role])
+      shop_owner.save
+      expect do
+        expect(shop_owner.shop_owner?).to be true
+      end.not_to raise_error
+    end
+
   end
 end

@@ -35,6 +35,5 @@ FactoryBot.define do
     end
     password {"password"}
     password_confirmation {"password"}
-    roles { [Role.find(3)] }
   end
 end

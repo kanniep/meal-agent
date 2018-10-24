@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe "shops/new", type: :view do
+  include Devise::Test::IntegrationHelpers
+  fixtures :all
+  
   before(:each) do
     assign(:shop, Shop.new())
   end
