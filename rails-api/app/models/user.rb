@@ -7,15 +7,23 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  before_create :add_default_role
+
   def admin?
     self.roles.include? Role.find_by_name('admin')
   end
 
-  def instructor?
+  def shop_owner?
     self.roles.include? Role.find_by_name('shop_owner')
   end
 
-  def student?
-    self.roles.include? Role.find_by_name('student')
+  def add_default_role
+    if self.roles.nil? || self.roles.empty?
+      self.roles = [Role.find_by_name('ordinary')]
+    else
+      if !self.roles.include? Role.find_by_name('ordinary')
+        self.roles.append(Role.find_by_name('ordinary'))
+      end
+    end
   end
 end

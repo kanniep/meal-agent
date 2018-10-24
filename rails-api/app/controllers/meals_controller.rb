@@ -32,7 +32,7 @@ class MealsController < ApplicationController
         format.html { redirect_to @meal, notice: 'Meal was successfully created.' }
         format.json { render :show, status: :created, location: @meal }
       else
-        format.html { render :new }
+        format.html { render :new, notice: 'Unable to create meal'}
         format.json { render json: @meal.errors, status: :unprocessable_entity }
       end
     end

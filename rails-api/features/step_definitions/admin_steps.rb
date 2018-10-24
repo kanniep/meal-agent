@@ -1,3 +1,9 @@
+Given("there are 3 possible roles") do
+  FactoryBot.create :admin_role
+  FactoryBot.create :shop_owner_role
+  FactoryBot.create :ordinary_role
+end
+
 Given("I am an admin") do
   @admin = FactoryBot.create :admin
 end

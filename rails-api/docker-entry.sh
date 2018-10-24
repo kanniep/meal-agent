@@ -4,4 +4,4 @@
 set -e
 
 bundle exec rake db:create db:migrate
-exec rails server -b 0.0.0.0
+exec rails server

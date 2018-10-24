@@ -21,7 +21,7 @@ Resources:
       TopicName: meal-agent-codebuild-notification
       Subscription:
         - Endpoint: st120367@ait.asia
-          Protocol: email-json
+          Protocol: email
   CodeBuildNotification:
     Type: AWS::Events::Rule
     Properties:
@@ -33,10 +33,9 @@ Resources:
           - "CodeBuild Build State Change"
         detail:
           build-status:
+            - "IN_PROGRESS"
             - "SUCCEEDED"
             - "FAILED"
-        project-name:
-          - !Sub ${AWS::StackName}-meal-agent-ci
       State: "ENABLED"
       Targets:
       -
@@ -74,19 +73,22 @@ Resources:
             pre_build:
               commands:
                 - RAILS_ENV=test bundle exec rake db:migrate
-                - bundle exec cucumber
+                - bundle exec rspec
+                - bundle exec cucumber --format html --out coverage/cucumber.html
                 - bundle exec rake metrics:all
             build:
               commands:
                 - cp -r tmp/metric_fu public/
+                - cp -r coverage public/
                 - echo ${MASTER_KEY} > config/master.key
                 - $(aws ecr get-login --no-include-email)
-                - docker build -t 917443201129.dkr.ecr.ap-southeast-1.amazonaws.com/meal-agent-rails --build-arg database_url=${DATABASE_URL} --build-arg database_password=${DATABASE_PASSWORD} --build-arg database_port=${DATABASE_PORT} .
-                - docker push 917443201129.dkr.ecr.ap-southeast-1.amazonaws.com/meal-agent-rails
+                - revision=$(($(aws ecs describe-task-definition --task-definition ECS-MealAgent-ecs-demo-app --query 'taskDefinition.revision')+1))
+                - docker build -t 917443201129.dkr.ecr.ap-southeast-1.amazonaws.com/meal-agent-rails:${revision} --build-arg database_url=${DATABASE_URL} --build-arg database_password=${DATABASE_PASSWORD} --build-arg database_port=${DATABASE_PORT} .
+                - docker push 917443201129.dkr.ecr.ap-southeast-1.amazonaws.com/meal-agent-rails:${revision}
             post_build:
               commands:
                 - cd ../iac/
-                - aws cloudformation deploy --template-file ecs-template.yaml --stack-name ECS-MealAgent --parameter-overrides VpcId=vpc-dd3a1cba KeyName=kantapon-aws SubnetId=subnet-689c970f,subnet-1e261d57 DBUrl=${DATABASE_URL} DBPassword=${DATABASE_PASSWORD} --capabilities CAPABILITY_IAM --no-fail-on-empty-changeset
+                - aws cloudformation deploy --template-file ecs-template.yaml --stack-name ECS-MealAgent --parameter-overrides VpcId=vpc-dd3a1cba KeyName=kantapon-aws SubnetId=subnet-689c970f,subnet-1e261d57 DBUrl=${DATABASE_URL} DBPassword=${DATABASE_PASSWORD} ImageTag=${revision} --capabilities CAPABILITY_IAM --no-fail-on-empty-changeset
       Environment:
         ComputeType: "BUILD_GENERAL1_SMALL"
         Image: "aws/codebuild/ruby:2.5.1"

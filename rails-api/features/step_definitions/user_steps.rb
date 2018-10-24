@@ -1,4 +1,7 @@
 Given("I am a new user") do
+  steps %{
+    Init data
+  }
   @user = FactoryBot.build :user
 end
 
@@ -7,6 +10,9 @@ Given("I am an user") do
 end
 
 Given(/^there are (\d+) users$/) do |users_num|
+  steps %{
+    Init data
+  }
   @users = []
   users_num.to_i.times do
     user = FactoryBot.create :user
