@@ -26,6 +26,8 @@ Parameters:
     Default: '35.197.150.136'
   DBPassword:
     Type: String
+  ImageTag:
+    Type: String
   InstanceType:
     Description: EC2 instance type
     Type: String
@@ -127,7 +129,7 @@ Resources:
         # Memory: '300'
         MemoryReservation: '300'
         Essential: 'true'
-        Image: 917443201129.dkr.ecr.ap-southeast-1.amazonaws.com/meal-agent-rails
+        Image: !Join [':', [917443201129.dkr.ecr.ap-southeast-1.amazonaws.com/meal-agent-rails, !Ref ImageTag]]
         LogConfiguration:
           LogDriver: awslogs
           Options:
