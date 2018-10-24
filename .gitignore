@@ -10,6 +10,7 @@
 # Ignore all logfiles and tempfiles.
 rails-api/log/*
 rails-api/tmp/*
+rails-api/coverage/*
 !/rails-api/log/.keep
 !/rails-api/tmp/.keep
 

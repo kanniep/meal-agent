@@ -6,7 +6,8 @@ Scenario: User signup success
 
   The user should be able to signup
 
-  Given I am a new user
+  Given there are 3 possible roles
+  And I am a new user
   When I visit root page
   Then I should be on the "users sign_in" page
   When I click "Sign up" link
@@ -20,7 +21,8 @@ Scenario: User signup fail
 
   The user should not be able to signup if their information are invalid
 
-  Given there are 1 users
+  Given there are 3 possible roles
+  And there are 1 users
   And I am a new user
   When I visit root page
   Then I should be on the "users sign_in" page
@@ -34,7 +36,8 @@ Scenario: User signin success
 
   The user should be able to signin
 
-  Given I am an user
+  Given there are 3 possible roles
+  And I am an user
   When I visit root page
   Then I should be on the "users sign_in" page
   And I fill in my email and password
@@ -46,7 +49,8 @@ Scenario: User signin fail
 
   The user should not be able to signin if their information are invalid
 
-  Given I am an user
+  Given there are 3 possible roles
+  And I am an user
   When I visit root page
   Then I should be on the "users sign_in" page
   And I fill in wrong password
@@ -57,7 +61,8 @@ Scenario: User got banned
 
   The user should not be able to signin if they got banned
 
-  Given I am an user
+  Given there are 3 possible roles
+  And I am an user
   And I got banned
   When I visit root page
   Then I should be on the "users sign_in" page

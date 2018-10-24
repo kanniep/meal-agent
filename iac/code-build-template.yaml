@@ -74,11 +74,13 @@ Resources:
             pre_build:
               commands:
                 - RAILS_ENV=test bundle exec rake db:migrate
-                - bundle exec cucumber
+                - bundle exec rspec
+                - bundle exec cucumber --format html --out coverage/cucumber.html
                 - bundle exec rake metrics:all
             build:
               commands:
                 - cp -r tmp/metric_fu public/
+                - cp -r coverage public/
                 - echo ${MASTER_KEY} > config/master.key
                 - $(aws ecr get-login --no-include-email)
                 - docker build -t 917443201129.dkr.ecr.ap-southeast-1.amazonaws.com/meal-agent-rails --build-arg database_url=${DATABASE_URL} --build-arg database_password=${DATABASE_PASSWORD} --build-arg database_port=${DATABASE_PORT} .

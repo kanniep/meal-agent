@@ -4,9 +4,8 @@ class Users::SessionsController < Devise::SessionsController
     if user.nil? || user.active
       super
     else
-      flash[:notice] = "You got banned"
-      self.resource = warden.authenticate!(auth_options)
-      respond_with resource, location: after_sign_in_path_for(resource)
+      flash[:error] = "You got banned"
+      redirect_to action: "new"
     end
   end
 end

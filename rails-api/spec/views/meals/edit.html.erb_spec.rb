@@ -2,7 +2,9 @@ require 'rails_helper'
 
 RSpec.describe "meals/edit", type: :view do
   before(:each) do
-    @meal = assign(:meal, Meal.create!())
+    @user = assign(:user, User.create!(email: 'st120367@ait.asia', password: 'dummyyyyyy'))
+    @shop = assign(:shop, Shop.create!(user: @user))
+    @meal = assign(:meal, Meal.create!(shop: @shop))
   end
 
   it "renders the edit meal form" do

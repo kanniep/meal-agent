@@ -1,0 +1,9 @@
+admin_role:
+  id: 1
+  name: admin
+shop_owner_role:
+  id: 2
+  name: shop_owner
+ordinary_role:
+  id: 3
+  name: ordinary
