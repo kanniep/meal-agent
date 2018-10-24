@@ -35,8 +35,6 @@ Resources:
           build-status:
             - "SUCCEEDED"
             - "FAILED"
-        project-name:
-          - !Sub ${AWS::StackName}-meal-agent-ci
       State: "ENABLED"
       Targets:
       -
