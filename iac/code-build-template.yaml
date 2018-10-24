@@ -21,7 +21,7 @@ Resources:
       TopicName: meal-agent-codebuild-notification
       Subscription:
         - Endpoint: st120367@ait.asia
-          Protocol: email-json
+          Protocol: email
   CodeBuildNotification:
     Type: AWS::Events::Rule
     Properties:
@@ -33,6 +33,7 @@ Resources:
           - "CodeBuild Build State Change"
         detail:
           build-status:
+            - "IN_PROGRESS"
             - "SUCCEEDED"
             - "FAILED"
       State: "ENABLED"
