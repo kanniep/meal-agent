@@ -81,8 +81,9 @@ Resources:
                 - cp -r coverage public/
                 - echo ${MASTER_KEY} > config/master.key
                 - $(aws ecr get-login --no-include-email)
-                - docker build -t "917443201129.dkr.ecr.ap-southeast-1.amazonaws.com/meal-agent-rails:${CODEBUILD_BUILD_ID}" --build-arg database_url=${DATABASE_URL} --build-arg database_password=${DATABASE_PASSWORD} --build-arg database_port=${DATABASE_PORT} .
-                - docker push 917443201129.dkr.ecr.ap-southeast-1.amazonaws.com/meal-agent-rails:${CODEBUILD_BUILD_ID}
+                - revision=$(($(aws ecs describe-task-definition --task-definition ECS-MealAgent-ecs-demo-app --query 'taskDefinition.revision')+1))
+                - docker build -t 917443201129.dkr.ecr.ap-southeast-1.amazonaws.com/meal-agent-rails:${revision} --build-arg database_url=${DATABASE_URL} --build-arg database_password=${DATABASE_PASSWORD} --build-arg database_port=${DATABASE_PORT} .
+                - docker push 917443201129.dkr.ecr.ap-southeast-1.amazonaws.com/meal-agent-rails:${revision}
             post_build:
               commands:
                 - cd ../iac/
