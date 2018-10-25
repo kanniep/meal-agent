@@ -169,7 +169,7 @@ Resources:
       Port: '443'
       Protocol: HTTPS
       Certificates:
-        - CertificateArn: arn:aws:acm:ap-southeast-1:917443201129:certificate/3d2d1363-829f-4a36-b830-efa9b31c8a10
+        - CertificateArn: arn:aws:acm:ap-southeast-1:917443201129:certificate/a14ff7fb-7724-4f45-a3bf-93a577c3be10
   ECSALBListenerRule:
     Type: AWS::ElasticLoadBalancingV2::ListenerRule
     DependsOn: ALBListener
