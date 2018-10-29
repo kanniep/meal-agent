@@ -36,4 +36,12 @@ FactoryBot.define do
     password {"password"}
     password_confirmation {"password"}
   end
+
+  factory :shop, class: Shop do
+    sequence :name do |n|
+      "shop#{n}"
+    end
+    location {"location"}
+    description {"description"}
+  end
 end

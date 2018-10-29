@@ -20,6 +20,14 @@ Given(/^there are (\d+) users$/) do |users_num|
   end
 end
 
+
+And("I am logged in") do
+  visit root_path
+  fill_in 'Email', with: @user.email
+  fill_in 'Password', with: @user.password
+  click_button "Log in"
+end
+
 And("I visit root page") do
   visit root_path
 end

@@ -24,10 +24,14 @@ class ShopsController < ApplicationController
   # POST /shops
   # POST /shops.json
   def create
-    @shop = Shop.new(shop_params)
+    current_params = shop_params
+    current_params[:user] = current_user
+    @shop = Shop.new(current_params)
 
     respond_to do |format|
       if @shop.save
+        current_user.add_role Role.find_by_name('shop_owner')
+        current_user.save
         format.html { redirect_to @shop, notice: 'Shop was successfully created.' }
         format.json { render :show, status: :created, location: @shop }
       else

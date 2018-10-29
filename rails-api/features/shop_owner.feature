@@ -15,5 +15,4 @@ Scenario: Customer create a shop
   Then I should be on the "shops new" page
   And I fill in shop information
   When I click "Create Shop" button
-  Then I should be on the "shops" page
-  And I should see the shop
+  And I should see details of the shop
