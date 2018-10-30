@@ -6,7 +6,7 @@ RSpec.describe MealsController, type: :controller do
 
   let(:valid_attributes) {
     shop = Shop.create!(name: 'shopname', location: 'asdas', description: 'asdfa', user: users(:ordinary))
-    return {name: 'meal_name', meal_type: 'thai', description: 'asdfasd', shop_id: shop.id}
+    return {name: 'meal_name1', meal_type: 'thai', description: 'asdfasd', shop_id: shop.id}
   }
 
   let(:invalid_attributes) {
@@ -14,8 +14,10 @@ RSpec.describe MealsController, type: :controller do
   }
 
   before(:each) do
-    @shop = Shop.create!(name: 'shopname2', location: 'asdas', description: 'asdfa', user: users(:ordinary))
-    subject.sign_in users(:shop_owner)
+    @user = User.create!(email: 'shop_owner1@ait.asia', password: '123456', roles: [roles(:shop_owner_role)])
+    subject.sign_in @user
+    @shop = Shop.create!(name: 'shopname2', location: 'asdas', description: 'asdfa', user: @user)
+    @meal = Meal.create!(name: 'meal_name2', meal_type: 'thai', description: 'asdfasd', shop: @shop)
   end
 
   describe "GET #index" do
@@ -29,8 +31,7 @@ RSpec.describe MealsController, type: :controller do
 
   describe "GET #show" do
     it "returns a success response" do
-      meal = Meal.create! valid_attributes
-      get :show, params: {id: meal.to_param}
+      get :show, params: {id: @meal.to_param}
       expect(response).to be_successful
     end
   end
@@ -44,8 +45,7 @@ RSpec.describe MealsController, type: :controller do
 
   describe "GET #edit" do
     it "returns a success response" do
-      meal = Meal.create! valid_attributes
-      get :edit, params: {id: meal.to_param, shop_id: @shop.id}
+      get :edit, params: {id: @meal.to_param, shop_id: @shop.id}
       expect(response).to be_successful
     end
   end
@@ -81,22 +81,19 @@ RSpec.describe MealsController, type: :controller do
       }
 
       it "updates the requested meal" do
-        meal = Meal.create! valid_attributes
-        put :update, params: {id: meal.to_param, meal: new_attributes, shop_id: @shop.id}
-        meal.reload
+        put :update, params: {id: @meal.to_param, meal: new_attributes, shop_id: @shop.id}
+        @meal.reload
       end
 
       it "redirects to the meal" do
-        meal = Meal.create! valid_attributes
-        put :update, params: {id: meal.to_param, meal: valid_attributes, shop_id: @shop.id}
-        expect(response).to redirect_to(meal)
+        put :update, params: {id: @meal.to_param, meal: valid_attributes, shop_id: @shop.id}
+        expect(response).to redirect_to(@meal)
       end
     end
 
     context "with invalid params" do
       it "returns a success response (i.e. to display the 'edit' template)" do
-        meal = Meal.create! valid_attributes
-        put :update, params: {id: meal.to_param, meal: invalid_attributes, shop_id: @shop.id}
+        put :update, params: {id: @meal.to_param, meal: invalid_attributes, shop_id: @shop.id}
         expect(response).to be_successful
       end
     end
@@ -104,15 +101,13 @@ RSpec.describe MealsController, type: :controller do
 
   describe "DELETE #destroy" do
     it "destroys the requested meal" do
-      meal = Meal.create! valid_attributes
       expect {
-        delete :destroy, params: {id: meal.to_param, shop_id: @shop.id}
+        delete :destroy, params: {id: @meal.to_param, shop_id: @shop.id}
       }.to change(Meal, :count).by(-1)
     end
 
     it "redirects to the meals list" do
-      meal = Meal.create! valid_attributes
-      delete :destroy, params: {id: meal.to_param, shop_id: @shop.id}
+      delete :destroy, params: {id: @meal.to_param, shop_id: @shop.id}
       expect(response).to redirect_to(meals_url)
     end
   end

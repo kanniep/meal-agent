@@ -5,7 +5,7 @@ RSpec.describe ShopsController, type: :controller do
   fixtures :all
 
   let(:valid_attributes) {
-    return {name: 'shopname', location: 'asdas', description: 'asdfa', user_id: users(:ordinary).id}
+    return {name: 'shopname1', location: 'asdas', description: 'asdfa', user_id: users(:ordinary).id}
   }
 
   let(:invalid_attributes) {
@@ -13,7 +13,9 @@ RSpec.describe ShopsController, type: :controller do
   }
 
   before(:each) do
-    subject.sign_in users(:ordinary)
+    @user = User.create!(email: 'shop_owner1@ait.asia', password: '123456', roles: [roles(:shop_owner_role)])
+    subject.sign_in @user
+    @shop = Shop.create!(name: 'shopname2', location: 'asdas', description: 'asdfa', user: @user)
   end
 
   describe "GET #index" do
@@ -26,8 +28,7 @@ RSpec.describe ShopsController, type: :controller do
 
   describe "GET #show" do
     it "returns a success response" do
-      shop = Shop.create! valid_attributes
-      get :show, params: {id: shop.to_param}
+      get :show, params: {id: @shop.to_param}
       expect(response).to be_successful
     end
   end
@@ -41,8 +42,7 @@ RSpec.describe ShopsController, type: :controller do
 
   describe "GET #edit" do
     it "returns a success response" do
-      shop = Shop.create! valid_attributes
-      get :edit, params: {id: shop.to_param}
+      get :edit, params: {id: @shop.to_param}
       expect(response).to be_successful
     end
   end
@@ -78,22 +78,19 @@ RSpec.describe ShopsController, type: :controller do
       }
 
       it "updates the requested shop" do
-        shop = Shop.create! valid_attributes
-        put :update, params: {id: shop.to_param, shop: new_attributes}
-        shop.reload
+        put :update, params: {id: @shop.to_param, shop: new_attributes}
+        @shop.reload
       end
 
       it "redirects to the shop" do
-        shop = Shop.create! valid_attributes
-        put :update, params: {id: shop.to_param, shop: valid_attributes}
-        expect(response).to redirect_to(shop)
+        put :update, params: {id: @shop.to_param, shop: valid_attributes}
+        expect(response).to redirect_to(@shop)
       end
     end
 
     context "with invalid params" do
       it "returns a success response (i.e. to display the 'edit' template)" do
-        shop = Shop.create! valid_attributes
-        put :update, params: {id: shop.to_param, shop: invalid_attributes}
+        put :update, params: {id: @shop.to_param, shop: invalid_attributes}
         expect(subject).to render_template("edit")
       end
     end
@@ -101,15 +98,13 @@ RSpec.describe ShopsController, type: :controller do
 
   describe "DELETE #destroy" do
     it "destroys the requested shop" do
-      shop = Shop.create! valid_attributes
       expect {
-        delete :destroy, params: {id: shop.to_param}
+        delete :destroy, params: {id: @shop.to_param}
       }.to change(Shop, :count).by(-1)
     end
 
     it "redirects to the shops list" do
-      shop = Shop.create! valid_attributes
-      delete :destroy, params: {id: shop.to_param}
+      delete :destroy, params: {id: @shop.to_param}
       expect(response).to redirect_to(shops_url)
     end
   end
