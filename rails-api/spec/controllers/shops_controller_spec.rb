@@ -9,7 +9,7 @@ RSpec.describe ShopsController, type: :controller do
   }
 
   let(:invalid_attributes) {
-    return {name: 'shopname', location: 'asdas', description: 'asdfa', user_id: nil}
+    return {name: nil, location: 'asdas', description: 'asdfa'}
   }
 
   before(:each) do
@@ -64,7 +64,7 @@ RSpec.describe ShopsController, type: :controller do
     context "with invalid params" do
       it "returns a success response (i.e. to display the 'new' template)" do
         post :create, params: {shop: invalid_attributes}
-        expect(response).to be_successful
+        expect(subject).to render_template("new")
       end
     end
   end
@@ -94,7 +94,7 @@ RSpec.describe ShopsController, type: :controller do
       it "returns a success response (i.e. to display the 'edit' template)" do
         shop = Shop.create! valid_attributes
         put :update, params: {id: shop.to_param, shop: invalid_attributes}
-        expect(response).to be_successful
+        expect(subject).to render_template("edit")
       end
     end
   end

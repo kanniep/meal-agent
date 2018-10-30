@@ -16,3 +16,20 @@ Scenario: Customer create a shop
   And I fill in shop information
   When I click "Create Shop" button
   And I should see details of the shop
+
+
+Scenario: Shop owner create a meal
+
+  A shop owner should be able create a meal for their shop
+
+  Given there are 3 possible roles
+  And I am a shop owner
+  And I own 1 shops
+  And I am logged in
+  And I want to create a meal
+  When I visit "shops" page
+  When I click "New meal" link
+  Then I should be on the "shops new" page
+  And I fill in shop information
+  When I click "Create Shop" button
+  And I should see details of the shop
