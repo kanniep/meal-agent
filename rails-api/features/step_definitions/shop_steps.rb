@@ -52,8 +52,3 @@ end
 When('I try to create a shop') do
   visit "/shops/new"
 end
-
-When(/^I try to delete shop (\d+)$/) do |shop_num|
-  shop = @shops[shop_num - 1]
-  delete "/shops/#{shop.id}"
-end

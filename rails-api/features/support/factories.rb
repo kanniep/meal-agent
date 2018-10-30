@@ -23,7 +23,7 @@ FactoryBot.define do
     end
     password {"password"}
     password_confirmation {"password"}
-    roles { [Role.find(1)] }
+    roles { [Role.find(3), Role.find(1)] }
   end
 
   factory :shop_owner, class: User do
@@ -35,7 +35,7 @@ FactoryBot.define do
     end
     password {"password"}
     password_confirmation {"password"}
-    roles { [Role.find(2)] }
+    roles { [Role.find(3), Role.find(2)] }
   end
 
   factory :user, class: User do

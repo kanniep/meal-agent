@@ -8,6 +8,10 @@ Given(/^there are (\d+) meals$/) do |num_meal|
   end
 end
 
+Given(/^I want to create a meal for shop (\d+)$/) do |num_shop|
+  @meal = FactoryBot.build :meal, shop: @shops[num_shop - 1]
+end
+
 And('I want to create a meal') do
   @shop = FactoryBot.create :shop, user: @user
   @meal = FactoryBot.build :meal, shop: @shop
@@ -45,9 +49,4 @@ end
 
 When('I try to create a meal') do
   visit "/shops/#{@shop.id}/meals/new"
-end
-
-When(/^I try to delete meal (\d+)$/) do |meal_num|
-  meal = @meals[meal_num - 1]
-  delete "/shops/#{@shop.id}/meals/#{meal.id}"
 end

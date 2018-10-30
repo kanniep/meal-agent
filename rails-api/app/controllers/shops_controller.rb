@@ -1,6 +1,14 @@
 class ShopsController < ApplicationController
   before_action :set_shop, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
+
+  load_and_authorize_resource
+  rescue_from CanCan::AccessDenied do |exception|
+    respond_to do |format|
+      format.json { head :forbidden }
+      format.html { redirect_to meals_path, :alert => exception.message }
+    end
+  end
   # GET /shops
   # GET /shops.json
   def index

@@ -23,7 +23,7 @@ Scenario: Customer cannot edit meals
   And I am logged in
   And there are 3 meals
   When I try to edit meal 2
-  Then I should see "You are not authorized!"
+  Then I should see "You are not authorized to access this page."
 
 Scenario: Customer cannot create meals
 
@@ -34,18 +34,7 @@ Scenario: Customer cannot create meals
   And I am logged in
   And I want to create a meal
   When I try to create a meal
-  Then I should see "You are not authorized!"
-
-Scenario: Customer cannot delete meals
-
-  A customer should not be able to delete any meals
-
-  Given there are 3 possible roles
-  And I am an user
-  And I am logged in
-  And there are 3 meals
-  When I try to delete meal 2
-  Then I should see "You are not authorized!"
+  Then I should see "You are not authorized to access this page."
 
 Scenario: Customer cannot see shops
 
@@ -56,9 +45,9 @@ Scenario: Customer cannot see shops
   And I am logged in
   And there are 3 shops
   When I visit "shops" page
-  Then I should see "You are not authorized!"
+  Then I should see "You are not authorized to access this page."
   When I try to select shop 2
-  Then I should see "You are not authorized!"
+  Then I should see "You are not authorized to access this page."
 
 Scenario: Customer cannot edit shops
 
@@ -69,26 +58,4 @@ Scenario: Customer cannot edit shops
   And I am logged in
   And there are 3 shops
   When I try to edit shop 2
-  Then I should see "You are not authorized!"
-
-Scenario: Customer cannot create shops
-
-  A customer should not be able to create any shops
-
-  Given there are 3 possible roles
-  And I am an user
-  And I am logged in
-  And I want to create a shop
-  When I try to create a shop
-  Then I should see "You are not authorized!"
-
-Scenario: Customer cannot delete shops
-
-  A customer should not be able to delete any shops
-
-  Given there are 3 possible roles
-  And I am an user
-  And I am logged in
-  And there are 3 shops
-  When I try to delete shop 2
-  Then I should see "You are not authorized!"
+  Then I should see "You are not authorized to access this page."
