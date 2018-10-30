@@ -7,7 +7,7 @@ RSpec.describe MealsController, type: :routing do
     end
 
     it "routes to #new" do
-      expect(:get => "/meals/new").to route_to("meals#new")
+      expect(:get => "/shops/1/meals/new").to route_to("meals#new", shop_id: "1")
     end
 
     it "routes to #show" do
@@ -15,24 +15,24 @@ RSpec.describe MealsController, type: :routing do
     end
 
     it "routes to #edit" do
-      expect(:get => "/meals/1/edit").to route_to("meals#edit", :id => "1")
+      expect(:get => "/shops/1/meals/1/edit").to route_to("meals#edit", :id => "1", shop_id: "1")
     end
 
 
     it "routes to #create" do
-      expect(:post => "/meals").to route_to("meals#create")
+      expect(:post => "/shops/1/meals").to route_to("meals#create", shop_id: "1")
     end
 
     it "routes to #update via PUT" do
-      expect(:put => "/meals/1").to route_to("meals#update", :id => "1")
+      expect(:put => "/shops/1/meals/1").to route_to("meals#update", :id => "1", shop_id: "1")
     end
 
     it "routes to #update via PATCH" do
-      expect(:patch => "/meals/1").to route_to("meals#update", :id => "1")
+      expect(:patch => "/shops/1/meals/1").to route_to("meals#update", :id => "1", shop_id: "1")
     end
 
     it "routes to #destroy" do
-      expect(:delete => "/meals/1").to route_to("meals#destroy", :id => "1")
+      expect(:delete => "/shops/1/meals/1").to route_to("meals#destroy", :id => "1", shop_id: "1")
     end
   end
 end

@@ -12,8 +12,7 @@ RSpec.describe "meals/edit", type: :view do
 
   it "renders the edit meal form" do
     render
-
-    assert_select "form[action=?][method=?]", meal_path(@meal), "post" do
+    assert_select "form[action=?]", shop_meal_url(@shop, @meal) do
     end
   end
 end

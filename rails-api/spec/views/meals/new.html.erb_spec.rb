@@ -13,7 +13,6 @@ RSpec.describe "meals/new", type: :view do
   it "renders new meal form" do
     render
     assert_select "form[method=?]", "post" do
-    # assert_select "form[action=?][method=?]", meals_path, "post" do
     end
   end
 end
