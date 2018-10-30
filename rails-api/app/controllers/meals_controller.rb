@@ -1,5 +1,6 @@
 class MealsController < ApplicationController
   before_action :set_meal, only: [:show, :edit, :update, :destroy]
+  before_action :set_shop, only: [:new, :edit, :create, :update, :destroy]
   before_action :authenticate_user!
 
   # GET /meals
@@ -25,11 +26,11 @@ class MealsController < ApplicationController
   # POST /meals
   # POST /meals.json
   def create
-    @meal = Meal.new(meal_params)
+    @meal = @shop.meals.new(meal_params)
 
     respond_to do |format|
       if @meal.save
-        format.html { redirect_to @meal, notice: 'Meal was successfully created.' }
+        format.html { redirect_to edit_shop_meal_url(@shop, @meal), notice: 'Meal was successfully created.' }
         format.json { render :show, status: :created, location: @meal }
       else
         format.html { render :new, notice: 'Unable to create meal'}
@@ -68,8 +69,12 @@ class MealsController < ApplicationController
       @meal = Meal.find(params[:id])
     end
 
+    def set_shop
+      @shop = Shop.find(params[:shop_id])
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def meal_params
-      params.require(:meal).permit(:name, :type, :description, :shop_id)
+      params.require(:meal).permit(:name, :description, :shop_id, :meal_type, :price)
     end
 end

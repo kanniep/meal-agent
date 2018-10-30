@@ -26,9 +26,21 @@ FactoryBot.define do
     roles { [Role.find(1)] }
   end
 
-  factory :user, class: User do
+  factory :shop_owner, class: User do
     sequence :id do |n|
       n + 20
+    end
+    sequence :email do |n|
+      "shop_owner#{n}@ait.asia"
+    end
+    password {"password"}
+    password_confirmation {"password"}
+    roles { [Role.find(2)] }
+  end
+
+  factory :user, class: User do
+    sequence :id do |n|
+      n + 30
     end
     sequence :email do |n|
       "customer#{n}@ait.asia"
@@ -43,5 +55,14 @@ FactoryBot.define do
     end
     location {"location"}
     description {"description"}
+  end
+
+  factory :meal, class: Meal do
+    sequence :name do |n|
+      "mock_meal#{n}"
+    end
+    meal_type {"meal_type"}
+    description {"description"}
+    price {40.22}
   end
 end

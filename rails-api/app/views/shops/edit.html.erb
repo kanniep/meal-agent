@@ -2,5 +2,7 @@
 
 <%= render 'form', shop: @shop %>
 
+<%= link_to 'New Meal', new_shop_meal_path(@shop) %>
+
 <%= link_to 'Show', @shop %> |
 <%= link_to 'Back', shops_path %>

@@ -24,12 +24,13 @@ Scenario: Shop owner create a meal
 
   Given there are 3 possible roles
   And I am a shop owner
-  And I own 1 shops
   And I am logged in
-  And I want to create a meal
+  And I own 1 shops
+  And I want to create a meal for shop 1
   When I visit "shops" page
-  When I click "New meal" link
-  Then I should be on the "shops new" page
-  And I fill in shop information
-  When I click "Create Shop" button
-  And I should see details of the shop
+  And I select shop 1
+  When I click "New Meal" link
+  Then I should be on the "shops 1 meals new" page
+  And I fill in meal information
+  When I click "Create Meal" button
+  And I should see details of the meal
