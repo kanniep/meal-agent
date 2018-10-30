@@ -1,4 +1,4 @@
-Feature: Shop Owner
+Feature: Resources Creation
 
 e.t.
 

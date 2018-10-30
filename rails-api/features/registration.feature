@@ -1,4 +1,4 @@
-Feature: User
+Feature: User Registration and Login
 
 e.t.
 

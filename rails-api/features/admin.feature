@@ -1,4 +1,4 @@
-Feature: Admin
+Feature: Administrator Banability
 
 e.t.
 
