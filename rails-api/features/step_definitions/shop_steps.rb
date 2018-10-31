@@ -71,7 +71,7 @@ Then('I should see details of the shop') do
 end
 
 And(/^I select shop (\d+)$/) do |shop_num|
-  find_all('td a', text: 'Edit').at(shop_num - 1).click
+  find('tr', text: @shops[shop_num - 1].name).find('td a', text: 'Edit').click
 end
 
 And(/^I select my shop (\d+)$/) do |shop_num|

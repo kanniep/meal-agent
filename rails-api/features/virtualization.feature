@@ -12,12 +12,12 @@ Scenario: Shop owner see meals in their shop
   And I own 2 shops
   And there are 3 meals for my shop 2
   When I visit "shops" page
-  And I select shop 2
+  And I select my shop 2
   Then I should see details of my meals
 
 Scenario: Shop owner cannot see other shops
 
-  A shop owner be able too see meals in shop details page
+  A shop owner should not be able too see other shopo owners meals
 
   Given there are 3 possible roles
   And I am a shop owner
