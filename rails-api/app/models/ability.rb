@@ -7,7 +7,7 @@ class Ability
     can :read, Meal
     can :create, Shop
 
-    return unless user.shop_owner?
+    return unless user.shop_owner? || user.admin?
     can :manage, Shop, user_id: user.id
     can :create, Meal
     can :manage, Meal, shop: { user_id: user.id }

@@ -7,10 +7,18 @@ Given('I am a shop owner') do
 end
 
 Given(/^I own (\d+) shops$/) do |num_shops|
-  @shops = []
+  @my_shops = []
   num_shops.to_i.times do
     shop = FactoryBot.create :shop, user: @user
-    @shops.append(shop)
+    @my_shops.append(shop)
+  end
+end
+
+Given(/^there are (\d+) shop owners$/) do |num_shop_owner|
+  @users = []
+  num_shop_owner.to_i.times do
+    user = FactoryBot.create :shop_owner
+    @users.append(user)
   end
 end
 
@@ -18,6 +26,33 @@ Given(/^there are (\d+) shops$/) do |num_shops|
   user = FactoryBot.create :shop_owner
   @shops = []
   num_shops.to_i.times do
+    shop = FactoryBot.create :shop, user: user
+    @shops.append(shop)
+  end
+end
+
+Given(/^there are (\d+) meals for shop (\d+)$/) do |num_meal, shop_num|
+  shop = @shops[shop_num - 1]
+  @meals = []
+  num_meal.to_i.times do
+    meal = FactoryBot.create :meal, shop: shop
+    @meals.append(meal)
+  end
+end
+
+Given(/^there are (\d+) meals for my shop (\d+)$/) do |num_meal, shop_num|
+  shop = @my_shops[shop_num - 1]
+  @my_meals = []
+  num_meal.to_i.times do
+    meal = FactoryBot.create :meal, shop: shop
+    @my_meals.append(meal)
+  end
+end
+
+Given(/^there are (\d+) shops for shop owner (\d+)$/) do |num_shop, shop_owner_num|
+  user = @users[shop_owner_num - 1]
+  @shops = []
+  num_shop.to_i.times do
     shop = FactoryBot.create :shop, user: user
     @shops.append(shop)
   end
@@ -51,4 +86,22 @@ end
 
 When('I try to create a shop') do
   visit "/shops/new"
+end
+
+Then("I should see details of my shops") do
+  @my_shops.each do |shop|
+    expect(page).to have_content shop.name
+  end
+end
+
+Then("I should see details of shops") do
+  @shops.each do |shop|
+    expect(page).to have_content shop.name
+  end
+end
+
+Then("I should not see details of shops") do
+  @shops.each do |shop|
+    expect(page).not_to have_content shop.name
+  end
 end

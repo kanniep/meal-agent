@@ -41,12 +41,30 @@ RSpec.describe MealsController, type: :controller do
       get :new, params: {shop_id: @shop.id}
       expect(response).to be_successful
     end
+
+    it "returns a redirect, not authorized" do
+      user = User.create!(email: 'shop_owner10@ait.asia', password: '123456')
+      subject.sign_in user
+
+      get :new, params: {shop_id: @shop.id}
+      expect(response).to redirect_to(meals_path)
+      expect(flash[:alert]).to eq "You are not authorized to access this page."
+    end
   end
 
   describe "GET #edit" do
     it "returns a success response" do
       get :edit, params: {id: @meal.to_param, shop_id: @shop.id}
       expect(response).to be_successful
+    end
+
+    it "returns a redirect, not authorized" do
+      user = User.create!(email: 'shop_owner10@ait.asia', password: '123456')
+      subject.sign_in user
+
+      get :edit, params: {id: @meal.to_param, shop_id: @shop.id}
+      expect(response).to redirect_to(meals_path)
+      expect(flash[:alert]).to eq "You are not authorized to access this page."
     end
   end
 
@@ -61,6 +79,15 @@ RSpec.describe MealsController, type: :controller do
       it "redirects to the created meal" do
         post :create, params: {meal: valid_attributes, shop_id: @shop.id}
         expect(response).to redirect_to(edit_shop_meal_url(@shop, Meal.last))
+      end
+
+      it "returns a redirect, not authorized" do
+        user = User.create!(email: 'shop_owner10@ait.asia', password: '123456')
+        subject.sign_in user
+
+        post :create, params: {meal: valid_attributes, shop_id: @shop.id}
+        expect(response).to redirect_to(meals_path)
+        expect(flash[:alert]).to eq "You are not authorized to access this page."
       end
     end
 
@@ -89,6 +116,15 @@ RSpec.describe MealsController, type: :controller do
         put :update, params: {id: @meal.to_param, meal: valid_attributes, shop_id: @shop.id}
         expect(response).to redirect_to(@meal)
       end
+
+      it "returns a redirect, not authorized" do
+        user = User.create!(email: 'shop_owner10@ait.asia', password: '123456')
+        subject.sign_in user
+
+        put :update, params: {id: @meal.to_param, meal: valid_attributes, shop_id: @shop.id}
+        expect(response).to redirect_to(meals_path)
+        expect(flash[:alert]).to eq "You are not authorized to access this page."
+      end
     end
 
     context "with invalid params" do
@@ -106,9 +142,26 @@ RSpec.describe MealsController, type: :controller do
       }.to change(Meal, :count).by(-1)
     end
 
-    it "redirects to the meals list" do
+    it "redirects to shop edit" do
       delete :destroy, params: {id: @meal.to_param, shop_id: @shop.id}
-      expect(response).to redirect_to(meals_url)
+      expect(response).to redirect_to(edit_shop_url(@shop))
+    end
+
+    it "returns a redirect, not authorized" do
+      user = User.create!(email: 'shop_owner10@ait.asia', password: '123456')
+      subject.sign_in user
+
+      delete :destroy, params: {id: @meal.to_param, shop_id: @shop.id}
+      expect(response).to redirect_to(meals_path)
+      expect(flash[:alert]).to eq "You are not authorized to access this page."
+    end
+
+    it "destroys the requested meal" do
+      user = User.create!(email: 'shop_owner10@ait.asia', password: '123456', roles: [roles(:admin_role)])
+      subject.sign_in user
+      expect {
+        delete :destroy, params: {id: @meal.to_param, shop_id: @shop.id}
+      }.to change(Meal, :count).by(-1)
     end
   end
 

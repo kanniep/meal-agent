@@ -12,6 +12,10 @@ Given(/^I want to create a meal for shop (\d+)$/) do |num_shop|
   @meal = FactoryBot.build :meal, shop: @shops[num_shop - 1]
 end
 
+Given(/^I want to create a meal for my shop (\d+)$/) do |num_shop|
+  @meal = FactoryBot.build :meal, shop: @my_shops[num_shop - 1]
+end
+
 And('I want to create a meal') do
   @shop = FactoryBot.create :shop, user: @user
   @meal = FactoryBot.build :meal, shop: @shop
@@ -49,4 +53,16 @@ end
 
 When('I try to create a meal') do
   visit "/shops/#{@shop.id}/meals/new"
+end
+
+Then("I should see details of my meals") do
+  @my_meals.each do |meal|
+    expect(page).to have_content meal.name
+  end
+end
+
+Then("I should see details of meals") do
+  @meals.each do |meal|
+    expect(page).to have_content meal.name
+  end
 end

@@ -12,12 +12,13 @@ class ShopsController < ApplicationController
   # GET /shops
   # GET /shops.json
   def index
-    @shops = Shop.all
+    @shops = current_user.shops.all
   end
 
   # GET /shops/1
   # GET /shops/1.json
   def show
+    @meals = @shop.meals.all
   end
 
   # GET /shops/new
@@ -27,6 +28,7 @@ class ShopsController < ApplicationController
 
   # GET /shops/1/edit
   def edit
+    @meals = @shop.meals.all
   end
 
   # POST /shops

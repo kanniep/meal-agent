@@ -2,6 +2,35 @@
 
 <%= render 'form', shop: @shop %>
 
+<% if @meals.count > 0 %>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Price</th>
+        <th>Description</th>
+        <th>Shop</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @meals.each do |meal| %>
+        <tr>
+          <td><%= meal.name %></td>
+          <td><%= meal.meal_type %></td>
+          <td><%= meal.price %></td>
+          <td><%= meal.description %></td>
+          <td><%= link_to 'Show', meal %></td>
+          <td><%= link_to 'Edit', edit_shop_meal_path(@shop, meal) %></td>
+          <td><%= link_to 'Destroy', shop_meal_path(@shop, meal), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+
 <%= link_to 'New Meal', new_shop_meal_path(@shop) %>
 
 <%= link_to 'Show', @shop %> |

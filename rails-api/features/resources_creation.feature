@@ -26,7 +26,7 @@ Scenario: Shop owner create a meal
   And I am a shop owner
   And I am logged in
   And I own 2 shops
-  And I want to create a meal for shop 1
+  And I want to create a meal for my shop 1
   When I visit "shops" page
   And I select shop 1
   When I click "New Meal" link

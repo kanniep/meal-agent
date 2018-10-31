@@ -7,6 +7,7 @@ RSpec.describe "shops/edit", type: :view do
   before(:each) do
     user = assign(:user, User.create!(email: 'st120367@ait.asia', password: 'dummyyyyyy'))
     @shop = assign(:shop, Shop.create!(name: '1234', user: user))
+    @meals = @shop.meals.all
   end
 
   it "renders the edit shop form" do
