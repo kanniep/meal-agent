@@ -10,9 +10,9 @@ Scenario: Shop owner see meals in their shop
   And I am a shop owner
   And I am logged in
   And I own 2 shops
-  And there are 3 meals for my shop 1
+  And there are 3 meals for my shop 2
   When I visit "shops" page
-  And I select shop 1
+  And I select shop 2
   Then I should see details of my meals
 
 Scenario: Shop owner cannot see other shops

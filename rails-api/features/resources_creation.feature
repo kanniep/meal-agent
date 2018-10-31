@@ -28,7 +28,7 @@ Scenario: Shop owner create a meal
   And I own 2 shops
   And I want to create a meal for my shop 1
   When I visit "shops" page
-  And I select shop 1
+  And I select my shop 1
   When I click "New Meal" link
   Then I should be on the "shops 1 meals new" page
   And I fill in meal information

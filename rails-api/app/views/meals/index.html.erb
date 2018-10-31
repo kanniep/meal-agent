@@ -27,7 +27,9 @@
         <td><%= meal.meal_type %></td>
         <td><%= meal.price %></td>
         <td><%= meal.description %></td>
+        <td><%= meal.shop.name %></td>
         <td><%= link_to 'Show', meal %></td>
+        <td><%= link_to 'Order', new_order_path(meal: meal) %></td>
       </tr>
     <% end %>
   </tbody>

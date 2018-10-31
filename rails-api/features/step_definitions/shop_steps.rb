@@ -33,10 +33,10 @@ end
 
 Given(/^there are (\d+) meals for shop (\d+)$/) do |num_meal, shop_num|
   shop = @shops[shop_num - 1]
-  @meals = []
+  @my_meals = []
   num_meal.to_i.times do
     meal = FactoryBot.create :meal, shop: shop
-    @meals.append(meal)
+    @my_meals.append(meal)
   end
 end
 
@@ -72,6 +72,10 @@ end
 
 And(/^I select shop (\d+)$/) do |shop_num|
   find_all('td a', text: 'Edit').at(shop_num - 1).click
+end
+
+And(/^I select my shop (\d+)$/) do |shop_num|
+  find('tr', text: @my_shops[shop_num - 1].name).find('td a', text: 'Edit').click
 end
 
 When(/^I try to select shop (\d+)$/) do |shop_num|
