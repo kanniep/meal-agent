@@ -6,14 +6,13 @@ RSpec.describe "meals/edit", type: :view do
 
   before(:each) do
     @user = assign(:user, User.create!(email: 'st120367@ait.asia', password: 'dummyyyyyy'))
-    @shop = assign(:shop, Shop.create!(user: @user))
-    @meal = assign(:meal, Meal.create!(shop: @shop))
+    @shop = assign(:shop, Shop.create!(name: '1234', user: @user))
+    @meal = assign(:meal, Meal.create!(name: '1234', shop: @shop))
   end
 
   it "renders the edit meal form" do
     render
-
-    assert_select "form[action=?][method=?]", meal_path(@meal), "post" do
+    assert_select "form[action=?]", shop_meal_url(@shop, @meal) do
     end
   end
 end

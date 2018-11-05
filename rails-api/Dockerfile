@@ -4,7 +4,7 @@ ARG database_url=localhost
 ARG database_password
 ARG database_port=5432
 
-RUN apt-get update && apt-get install -y nodejs postgresql-client --no-install-recommends && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y nodejs postgresql-client --no-install-recommends --allow-unauthenticated && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app

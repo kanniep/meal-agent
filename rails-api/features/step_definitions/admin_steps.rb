@@ -5,7 +5,7 @@ Given("there are 3 possible roles") do
 end
 
 Given("I am an admin") do
-  @admin = FactoryBot.create :admin
+  @user = FactoryBot.create :admin
 end
 
 Given(/^there are (\d+) customers$/) do |users_num|
@@ -14,13 +14,6 @@ Given(/^there are (\d+) customers$/) do |users_num|
     user = FactoryBot.create :user
     @users.append(user)
   end
-end
-
-Given("I am logged in") do
-  visit root_path
-  fill_in 'Email', with: @admin.email
-  fill_in 'Password', with: @admin.password
-  click_button "Log in"
 end
 
 Given("I should see multiple users") do

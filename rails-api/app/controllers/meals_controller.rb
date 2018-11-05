@@ -1,7 +1,15 @@
 class MealsController < ApplicationController
   before_action :set_meal, only: [:show, :edit, :update, :destroy]
+  before_action :set_shop, only: [:new, :edit, :create, :update, :destroy]
   before_action :authenticate_user!
 
+  load_and_authorize_resource
+  rescue_from CanCan::AccessDenied do |exception|
+    respond_to do |format|
+      format.json { head :forbidden }
+      format.html { redirect_to meals_path, :alert => exception.message }
+    end
+  end
   # GET /meals
   # GET /meals.json
   def index
@@ -25,11 +33,11 @@ class MealsController < ApplicationController
   # POST /meals
   # POST /meals.json
   def create
-    @meal = Meal.new(meal_params)
+    @meal = @shop.meals.new(meal_params)
 
     respond_to do |format|
       if @meal.save
-        format.html { redirect_to @meal, notice: 'Meal was successfully created.' }
+        format.html { redirect_to edit_shop_meal_url(@shop, @meal), notice: 'Meal was successfully created.' }
         format.json { render :show, status: :created, location: @meal }
       else
         format.html { render :new, notice: 'Unable to create meal'}
@@ -57,7 +65,7 @@ class MealsController < ApplicationController
   def destroy
     @meal.destroy
     respond_to do |format|
-      format.html { redirect_to meals_url, notice: 'Meal was successfully destroyed.' }
+      format.html { redirect_to edit_shop_url(@shop), notice: 'Meal was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -68,8 +76,12 @@ class MealsController < ApplicationController
       @meal = Meal.find(params[:id])
     end
 
+    def set_shop
+      @shop = Shop.find(params[:shop_id])
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def meal_params
-      params.require(:meal).permit(:name, :type, :description, :shop_id)
+      params.require(:meal).permit(:name, :description, :shop_id, :meal_type, :price)
     end
 end

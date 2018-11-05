@@ -1,12 +1,6 @@
 admin:
-  id: 1
   email: admin@ait.asia
-  created_at: 2018-10-24 02:18:07.501597
 shop_owner:
-  id: 2
   email: shop_owner@ait.asia
-  created_at: 2018-10-24 02:18:07.501597
 ordinary:
-  id: 3
   email: ordinary@ait.asia
-  created_at: 2018-10-24 02:18:07.501597

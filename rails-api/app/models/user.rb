@@ -17,6 +17,12 @@ class User < ApplicationRecord
     self.roles.include? Role.find_by_name('shop_owner')
   end
 
+  def add_role(role)
+    if !self.roles.include? role
+      self.roles.append(role)
+    end
+  end
+
   def add_default_role
     if self.roles.nil? || self.roles.empty?
       self.roles = [Role.find_by_name('ordinary')]
@@ -25,5 +31,12 @@ class User < ApplicationRecord
         self.roles.append(Role.find_by_name('ordinary'))
       end
     end
+  end
+
+  def active_orders
+    orders = self.orders.reject do |order|
+      !order.active?
+    end
+    return orders
   end
 end
