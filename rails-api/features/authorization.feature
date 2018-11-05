@@ -2,12 +2,14 @@ Feature: User Authoriztion
 
 e.t.
 
+Background:
+  Given there are 3 possible roles
+
 Scenario: Customer can see meals details
 
   A customer should be able explore meals information
 
-  Given there are 3 possible roles
-  And I am an user
+  Given I am an user
   And I am logged in
   And there are 3 meals
   When I visit root page
@@ -18,8 +20,7 @@ Scenario: Customer cannot edit meals
 
   A customer should not be able to edit any meals
 
-  Given there are 3 possible roles
-  And I am an user
+  Given I am an user
   And I am logged in
   And there are 3 meals
   When I try to edit meal 2
@@ -29,8 +30,7 @@ Scenario: Customer cannot create meals
 
   A customer should not be able to create any meals
 
-  Given there are 3 possible roles
-  And I am an user
+  Given I am an user
   And I am logged in
   And I want to create a meal
   When I try to create a meal
@@ -40,8 +40,7 @@ Scenario: Customer cannot see shops
 
   A customer should not be able to see any shops details
 
-  Given there are 3 possible roles
-  And I am an user
+  Given I am an user
   And I am logged in
   And there are 3 shops
   When I visit "shops" page
@@ -53,8 +52,7 @@ Scenario: Customer cannot edit shops
 
   A customer should not be able to edit any shops
 
-  Given there are 3 possible roles
-  And I am an user
+  Given I am an user
   And I am logged in
   And there are 3 shops
   When I try to edit shop 2
