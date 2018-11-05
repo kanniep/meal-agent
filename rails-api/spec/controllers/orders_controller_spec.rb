@@ -61,14 +61,14 @@ RSpec.describe OrdersController, type: :controller do
 
       it "redirects to the created order" do
         post :create, params: {order: valid_attributes}
-        expect(response).to redirect_to(Order.last)
+        expect(response).to redirect_to orders_url
       end
     end
 
     context "with invalid params" do
       it "returns a success response (i.e. to display the 'new' template)" do
         post :create, params: {order: invalid_attributes}
-        expect(response).to be_successful
+        expect(response).to redirect_to meals_url
       end
     end
   end
@@ -89,14 +89,14 @@ RSpec.describe OrdersController, type: :controller do
 
       it "redirects to the order" do
         put :update, params: {id: @order.to_param, order: valid_attributes}
-        expect(response).to redirect_to(@order)
+        expect(response).to redirect_to orders_url
       end
     end
 
     context "with invalid params" do
       it "returns a success response (i.e. to display the 'edit' template)" do
         put :update, params: {id: @order.to_param, order: invalid_attributes}
-        expect(response).to be_successful
+        expect(response).to redirect_to orders_url
       end
     end
   end

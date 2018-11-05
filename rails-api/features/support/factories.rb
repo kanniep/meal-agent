@@ -65,4 +65,9 @@ FactoryBot.define do
     description {"description"}
     price {40.22}
   end
+
+  factory :order, class: Order do
+    user {User.all.first}
+    meal {Meal.all.first}
+  end
 end

@@ -33,10 +33,10 @@ end
 
 Given(/^there are (\d+) meals for shop (\d+)$/) do |num_meal, shop_num|
   shop = @shops[shop_num - 1]
-  @my_meals = []
+  @meals = []
   num_meal.to_i.times do
     meal = FactoryBot.create :meal, shop: shop
-    @my_meals.append(meal)
+    @meals.append(meal)
   end
 end
 

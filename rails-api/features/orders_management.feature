@@ -14,8 +14,9 @@ Scenario: Shop owner accept an order
   And I own 2 shops
   And there are 5 meals for my shop 1
   And there are 3 orders for my shop 1
-  And I visit 'orders' page
+  And I visit "orders" page
   When I accept order 2
+  Then I should be on the "orders" page
   Then I should see order 2 with status "preparing"
 
 Scenario: Shop owner reject an order
@@ -27,7 +28,7 @@ Scenario: Shop owner reject an order
   And I own 2 shops
   And there are 5 meals for my shop 1
   And there are 3 orders for my shop 1
-  And I visit 'orders' page
+  And I visit "orders" page
   When I reject order 2
   Then I should not see order 2
 
@@ -41,7 +42,7 @@ Scenario: Shop owner finish preparing an order
   And there are 5 meals for my shop 1
   And there are 3 orders for my shop 1
   And order 2 have status "preparing"
-  And I visit 'orders' page
+  And I visit "orders" page
   When I finish preparing order 2
   Then I should see order 2 with status "prepared"
 
@@ -55,6 +56,7 @@ Scenario: Customer receive an order
   And there are 5 meals for shop 1
   And I have ordered meal 2
   And order 1 have status "prepared"
-  And I visit 'orders' page
-  When I finish preparing order 2
-  Then I should see order 2 with status "prepared"
+  When I visit "orders" page
+  Then I should see order 1 with status "prepared"
+  When I click receive order 1
+  Then I should not see order 1

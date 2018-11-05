@@ -32,4 +32,11 @@ class User < ApplicationRecord
       end
     end
   end
+
+  def active_orders
+    orders = self.orders.reject do |order|
+      !order.active?
+    end
+    return orders
+  end
 end

@@ -13,4 +13,8 @@ class Order < ApplicationRecord
   def add_default_status
     self.status = :pending
   end
+
+  def active?
+    !(self.status.eql? "rejected") && !(self.status.eql? "served")
+  end
 end
