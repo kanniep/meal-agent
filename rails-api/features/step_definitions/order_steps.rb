@@ -4,5 +4,5 @@ end
 
 Then(/^I should see order for meal (\d+)$/) do |meal_num|
   expect(page).to have_content @meals[meal_num - 1].name
-  expect(page).to have_content "Pending"
+  expect(page).to have_content "pending"
 end
