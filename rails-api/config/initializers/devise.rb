@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-
+require 'omniauth-google-oauth2'
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
@@ -9,6 +9,11 @@ Devise.setup do |config|
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
   # config.secret_key = 'a2a7e17a5f8a16bf854ef9d3d9d7fc1d43b75b96c0f834a72ffa66ce25f53bfbc93beb4838cc18e8c1fae240ba532d05dcb02080bbc29a4de9d896b6b46bc7f0'
+
+  # Configure Google omniauth with proper scope
+  config.omniauth :google_oauth2, ENV["GOOGLE_CLIENT_ID"], ENV["GOOGLE_OAUTH_SECRET"], {
+    scope: "email"
+  }
 
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
