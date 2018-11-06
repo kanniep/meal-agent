@@ -5,7 +5,7 @@ RSpec.describe OrdersController, type: :controller do
   fixtures :all
 
   let(:valid_attributes) {
-    shop_owner = User.create!(email: 'shop_owner1@ait.asia', password: '123456', roles: [roles(:shop_owner_role)])
+    shop_owner = User.create!(email: 'shop_owner1@ait.asia', roles: [roles(:shop_owner_role)])
     shop = Shop.create!(name: 'shopname1', location: 'asdas', description: 'asdfa', user: shop_owner)
     meal = Meal.create!(name: 'meal_name1', meal_type: 'thai', description: 'asdfasd', shop: shop)
     {meal_id: meal}
@@ -16,7 +16,7 @@ RSpec.describe OrdersController, type: :controller do
   }
 
   before(:each) do
-    @shop_owner = User.create!(email: 'shop_owner2@ait.asia', password: '123456', roles: [roles(:shop_owner_role)])
+    @shop_owner = User.create!(email: 'shop_owner2@ait.asia', roles: [roles(:shop_owner_role)])
     subject.sign_in @shop_owner
     @shop = Shop.create!(name: 'shopname3', location: 'asdas', description: 'asdfa', user: @shop_owner)
     @meal = Meal.create!(name: 'meal_name3', meal_type: 'thai', description: 'asdfasd', shop: @shop)

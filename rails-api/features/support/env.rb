@@ -56,3 +56,10 @@ end
 # See https://github.com/cucumber/cucumber-rails/blob/master/features/choose_javascript_database_strategy.feature
 Cucumber::Rails::Database.javascript_strategy = :truncation
 
+Before do
+  OmniAuth.config.test_mode = true
+end
+
+After do
+  OmniAuth.config.test_mode = false
+end

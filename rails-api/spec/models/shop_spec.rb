@@ -5,7 +5,7 @@ RSpec.describe Shop, type: :model do
 
   describe 'Orders of shop' do
     before(:each) do
-      @user = User.create!(email: 'shop_owner1@ait.asia', password: '123456', roles: [roles(:shop_owner_role)])
+      @user = User.create!(email: 'shop_owner1@ait.asia', roles: [roles(:shop_owner_role)])
       @shop = Shop.create!(name: 'shopname2', location: 'asdas', description: 'asdfa', user: @user)
       @meal = Meal.create!(name: 'meal_name2', meal_type: 'thai', description: 'asdfasd', shop: @shop)
       @order = Order.create!(meal: @meal, user: @user)

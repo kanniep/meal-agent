@@ -14,7 +14,7 @@ RSpec.describe MealsController, type: :controller do
   }
 
   before(:each) do
-    @user = User.create!(email: 'shop_owner1@ait.asia', password: '123456', roles: [roles(:shop_owner_role)])
+    @user = User.create!(email: 'shop_owner1@ait.asia', roles: [roles(:shop_owner_role)])
     subject.sign_in @user
     @shop = Shop.create!(name: 'shopname2', location: 'asdas', description: 'asdfa', user: @user)
     @meal = Meal.create!(name: 'meal_name2', meal_type: 'thai', description: 'asdfasd', shop: @shop)
@@ -43,7 +43,7 @@ RSpec.describe MealsController, type: :controller do
     end
 
     it "returns a redirect, not authorized" do
-      user = User.create!(email: 'shop_owner10@ait.asia', password: '123456')
+      user = User.create!(email: 'shop_owner10@ait.asia')
       subject.sign_in user
 
       get :new, params: {shop_id: @shop.id}
@@ -59,7 +59,7 @@ RSpec.describe MealsController, type: :controller do
     end
 
     it "returns a redirect, not authorized" do
-      user = User.create!(email: 'shop_owner10@ait.asia', password: '123456')
+      user = User.create!(email: 'shop_owner10@ait.asia')
       subject.sign_in user
 
       get :edit, params: {id: @meal.to_param, shop_id: @shop.id}
@@ -82,7 +82,7 @@ RSpec.describe MealsController, type: :controller do
       end
 
       it "returns a redirect, not authorized" do
-        user = User.create!(email: 'shop_owner10@ait.asia', password: '123456')
+        user = User.create!(email: 'shop_owner10@ait.asia')
         subject.sign_in user
 
         post :create, params: {meal: valid_attributes, shop_id: @shop.id}
@@ -118,7 +118,7 @@ RSpec.describe MealsController, type: :controller do
       end
 
       it "returns a redirect, not authorized" do
-        user = User.create!(email: 'shop_owner10@ait.asia', password: '123456')
+        user = User.create!(email: 'shop_owner10@ait.asia')
         subject.sign_in user
 
         put :update, params: {id: @meal.to_param, meal: valid_attributes, shop_id: @shop.id}
@@ -148,7 +148,7 @@ RSpec.describe MealsController, type: :controller do
     end
 
     it "returns a redirect, not authorized" do
-      user = User.create!(email: 'shop_owner10@ait.asia', password: '123456')
+      user = User.create!(email: 'shop_owner10@ait.asia')
       subject.sign_in user
 
       delete :destroy, params: {id: @meal.to_param, shop_id: @shop.id}
@@ -157,7 +157,7 @@ RSpec.describe MealsController, type: :controller do
     end
 
     it "destroys the requested meal" do
-      user = User.create!(email: 'shop_owner10@ait.asia', password: '123456', roles: [roles(:admin_role)])
+      user = User.create!(email: 'shop_owner10@ait.asia', roles: [roles(:admin_role)])
       subject.sign_in user
       expect {
         delete :destroy, params: {id: @meal.to_param, shop_id: @shop.id}

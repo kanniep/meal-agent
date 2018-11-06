@@ -2,6 +2,14 @@ Given("I am a new user") do
   @user = FactoryBot.build :user
 end
 
+Given("I try to use another user email") do
+  User.all.each do |user|
+    puts user.email
+  end
+  puts @users[0].email
+  @user = FactoryBot.build :user, email: @users[0].email
+end
+
 Given("I am an user") do
   @user = FactoryBot.create :user
 end
@@ -14,16 +22,17 @@ Given(/^there are (\d+) users$/) do |users_num|
   end
 end
 
-
 And("I am logged in") do
   visit root_path
-  fill_in 'Email', with: @user.email
-  fill_in 'Password', with: @user.password
-  click_button "Log in"
+  click_link "Sign in with Google"
 end
 
 And("I visit root page") do
   visit root_path
+end
+
+And("I should see my information") do
+  expect(page).to have_content "Welcome #{@user.email}! Not you? Sign out"
 end
 
 And("I visit {string} page") do |page_name|

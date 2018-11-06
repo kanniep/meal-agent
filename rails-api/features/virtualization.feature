@@ -21,8 +21,8 @@ Scenario: Shop owner cannot see other shops
 
   A shop owner should not be able too see other shopo owners meals
 
-  Given I am a shop owner
-  And there are 2 shop owners
+  Given there are 2 shop owners
+  And I am a shop owner
   And I am logged in
   And I own 2 shops
   And there are 3 shops for shop owner 2

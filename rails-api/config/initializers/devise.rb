@@ -12,7 +12,8 @@ Devise.setup do |config|
 
   # Configure Google omniauth with proper scope
   config.omniauth :google_oauth2, ENV["GOOGLE_CLIENT_ID"], ENV["GOOGLE_OAUTH_SECRET"], {
-    scope: "email"
+    scope: "email",
+    prompt: "select_account",
   }
 
   # ==> Controller configuration
