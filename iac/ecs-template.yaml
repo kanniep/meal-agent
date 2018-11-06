@@ -28,6 +28,10 @@ Parameters:
     Type: String
   ImageTag:
     Type: String
+  GoogleClientID:
+    Type: String
+  GoogleOauthSecret:
+    Type: String
   InstanceType:
     Description: EC2 instance type
     Type: String
@@ -146,6 +150,10 @@ Resources:
             Value: !Ref DBUrl
           - Name: DATABASE_PASSWORD
             Value: !Ref DBPassword
+          - Name: GOOGLE_CLIENT_ID
+            Value: !Ref GoogleClientID
+          - Name: GOOGLE_OAUTH_SECRET
+            Value: !Ref GoogleOauthSecret
       Volumes:
       - Name: meal-agent-rails-vol
   ECSALB:

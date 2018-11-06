@@ -14,6 +14,10 @@ Parameters:
     Default: 5432
   MasterKey:
     Type: String
+  GoogleClientID:
+    Type: String
+  GoogleOauthSecret:
+    Type: String
 Resources:
   CodeBuildSNS:
     Type: AWS::SNS::Topic
@@ -88,7 +92,7 @@ Resources:
             post_build:
               commands:
                 - cd ../iac/
-                - aws cloudformation deploy --template-file ecs-template.yaml --stack-name ECS-MealAgent --parameter-overrides VpcId=vpc-dd3a1cba KeyName=kantapon-aws SubnetId=subnet-689c970f,subnet-1e261d57 DBUrl=${DATABASE_URL} DBPassword=${DATABASE_PASSWORD} ImageTag=${revision} --capabilities CAPABILITY_IAM --no-fail-on-empty-changeset
+                - aws cloudformation deploy --template-file ecs-template.yaml --stack-name ECS-MealAgent --parameter-overrides VpcId=vpc-dd3a1cba KeyName=kantapon-aws SubnetId=subnet-689c970f,subnet-1e261d57 DBUrl=${DATABASE_URL} DBPassword=${DATABASE_PASSWORD} GoogleClientID=${GOOGLE_CLIENT_ID} GoogleOauthSecret=${GOOGLE_OAUTH_SECRET} ImageTag=${revision} --capabilities CAPABILITY_IAM --no-fail-on-empty-changeset
       Environment:
         ComputeType: "BUILD_GENERAL1_SMALL"
         Image: "aws/codebuild/ruby:2.5.1"
@@ -110,6 +114,12 @@ Resources:
           - Name: MASTER_KEY
             Type: PLAINTEXT
             Value: !Ref MasterKey
+          - Name: GOOGLE_CLIENT_ID
+            Type: PLAINTEXT
+            Value: !Ref GoogleClientID
+          - Name: GOOGLE_OAUTH_SECRET
+            Type: PLAINTEXT
+            Value: !Ref GoogleOauthSecret
       Name: !Sub ${AWS::StackName}-meal-agent-ci
       Description: rspec, cucumber and metric_fu
       ServiceRole: !Ref CodeBuildRole
