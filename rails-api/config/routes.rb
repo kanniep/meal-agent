@@ -6,6 +6,10 @@ Rails.application.routes.draw do
     resources :meals, only: [:new, :create, :edit, :update, :destroy]
   end
   resources :meals, only: [:index, :show]
-  devise_for :users, controllers: {sessions: "users/sessions"}
+  devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
+  devise_scope :user do
+    get 'users/sign_in', :to => 'devise/sessions#new', :as => :new_user_session
+    delete 'users/sign_out', :to => 'devise/sessions#destroy', :as => :destroy_user_session
+  end
   root to: 'meals#index'
 end

@@ -50,9 +50,9 @@ Scenario: Customer receive an order
 
   If the order is ready, the customer has to go to the shop and receive the meal
 
-  Given I am an user
+  Given there are 2 shops
+  And I am an user
   And I am logged in
-  And there are 2 shops
   And there are 5 meals for shop 1
   And I have ordered meal 2
   And order 1 have status "prepared"

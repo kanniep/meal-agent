@@ -8,7 +8,7 @@ RSpec.describe User, type: :model do
     it 'is user an admin?' do
       admin_role = roles(:admin_role)
       ordinary_role = roles(:ordinary_role)
-      admin = User.new(email: 'st120367@ait.asia', password: 'dummyyyyyy', roles: [admin_role, ordinary_role])
+      admin = User.new(email: 'st120367@ait.asia', roles: [admin_role, ordinary_role])
       expect do
         expect(admin.admin?).to be true
       end.not_to raise_error
@@ -17,7 +17,7 @@ RSpec.describe User, type: :model do
     it 'is user an shop_owner?' do
       shop_owner_role = roles(:shop_owner_role)
       ordinary_role = roles(:ordinary_role)
-      shop_owner = User.new( email: 'st120367@ait.asia', password: 'dummyyyyyy', roles: [shop_owner_role, ordinary_role])
+      shop_owner = User.new( email: 'st120367@ait.asia', roles: [shop_owner_role, ordinary_role])
       expect do
         expect(shop_owner.shop_owner?).to be true
       end.not_to raise_error
@@ -25,10 +25,36 @@ RSpec.describe User, type: :model do
 
     it 'have roles before create' do
       shop_owner_role = roles(:shop_owner_role)
-      shop_owner = User.new( email: 'st120367@ait.asia', password: 'dummyyyyyy', roles: [shop_owner_role])
+      shop_owner = User.new( email: 'st120367@ait.asia', roles: [shop_owner_role])
       shop_owner.save
       expect do
         expect(shop_owner.shop_owner?).to be true
+      end.not_to raise_error
+    end
+
+  end
+
+  describe 'handle Google Oauth' do
+    before(:all) do
+      @auth = OmniAuth::AuthHash.new({
+          provider: 'google',
+          uid: 12345,
+          info: {
+            email: "user@ait.asia"
+          },
+          credentials: {
+            token: "token",
+            refresh_token: "another_token",
+            expires_at: 1354920555,
+            expires: true
+          }
+        })
+    end
+
+    it 'is user an admin?' do
+      expect do
+        user = User.from_omniauth(@auth)
+        expect(user.email).to eql @auth.info.email
       end.not_to raise_error
     end
 

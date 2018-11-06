@@ -13,7 +13,7 @@ RSpec.describe ShopsController, type: :controller do
   }
 
   before(:each) do
-    @user = User.create!(email: 'shop_owner1@ait.asia', password: '123456', roles: [roles(:shop_owner_role)])
+    @user = User.create!(email: 'shop_owner1@ait.asia', roles: [roles(:shop_owner_role)])
     subject.sign_in @user
     @shop = Shop.create!(name: 'shopname2', location: 'asdas', description: 'asdfa', user: @user)
   end
@@ -47,7 +47,7 @@ RSpec.describe ShopsController, type: :controller do
     end
 
     it "returns a redirect, not authorized" do
-      user = User.create!(email: 'shop_owner10@ait.asia', password: '123456')
+      user = User.create!(email: 'shop_owner10@ait.asia')
       subject.sign_in user
 
       get :edit, params: {id: @shop.to_param}
@@ -58,7 +58,7 @@ RSpec.describe ShopsController, type: :controller do
 
   describe "POST #create" do
     before(:each) do
-      user = User.create!(email: 'shop_owner10@ait.asia', password: '123456')
+      user = User.create!(email: 'shop_owner10@ait.asia')
       subject.sign_in user
     end
 
@@ -113,7 +113,7 @@ RSpec.describe ShopsController, type: :controller do
       end
 
       it "returns a redirect, not authorized" do
-        user = User.create!(email: 'shop_owner10@ait.asia', password: '123456')
+        user = User.create!(email: 'shop_owner10@ait.asia')
         subject.sign_in user
 
         put :update, params: {id: @shop.to_param, shop: valid_attributes}
@@ -143,7 +143,7 @@ RSpec.describe ShopsController, type: :controller do
     end
 
     it "returns a redirect, not authorized" do
-      user = User.create!(email: 'shop_owner10@ait.asia', password: '123456')
+      user = User.create!(email: 'shop_owner10@ait.asia')
       subject.sign_in user
 
       delete :destroy, params: {id: @shop.to_param}

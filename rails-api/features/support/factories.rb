@@ -19,10 +19,21 @@ FactoryBot.define do
       n + 10
     end
     sequence :email do |n|
+      OmniAuth.config.mock_auth[:google_oauth2] = OmniAuth::AuthHash.new({
+          provider: 'google',
+          uid: 12345,
+          info: {
+            email: "admin#{n}@ait.asia"
+          },
+          credentials: {
+            token: "token_admin#{n}",
+            refresh_token: "another_token_admin#{n}",
+            expires_at: 1354920555,
+            expires: true
+          }
+        })
       "admin#{n}@ait.asia"
     end
-    password {"password"}
-    password_confirmation {"password"}
     roles { [Role.find(3), Role.find(1)] }
   end
 
@@ -31,10 +42,21 @@ FactoryBot.define do
       n + 20
     end
     sequence :email do |n|
+      OmniAuth.config.mock_auth[:google_oauth2] = OmniAuth::AuthHash.new({
+          provider: 'google',
+          uid: 12345,
+          info: {
+            email: "shop_owner#{n}@ait.asia"
+          },
+          credentials: {
+            token: "token_shop_owner#{n}",
+            refresh_token: "another_token_shop_owner#{n}",
+            expires_at: 1354920555,
+            expires: true
+          }
+        })
       "shop_owner#{n}@ait.asia"
     end
-    password {"password"}
-    password_confirmation {"password"}
     roles { [Role.find(3), Role.find(2)] }
   end
 
@@ -43,10 +65,21 @@ FactoryBot.define do
       n + 30
     end
     sequence :email do |n|
+      OmniAuth.config.mock_auth[:google_oauth2] = OmniAuth::AuthHash.new({
+          provider: 'google',
+          uid: 12345,
+          info: {
+            email: "customer#{n}@ait.asia"
+          },
+          credentials: {
+            token: "token_customer#{n}",
+            refresh_token: "another_token_customer#{n}",
+            expires_at: 1354920555,
+            expires: true
+          }
+        })
       "customer#{n}@ait.asia"
     end
-    password {"password"}
-    password_confirmation {"password"}
   end
 
   factory :shop, class: Shop do
