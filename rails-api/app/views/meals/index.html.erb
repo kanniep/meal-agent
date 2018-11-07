@@ -1,11 +1,5 @@
 <p id="notice"><%= notice %></p>
 
-<% if current_user.shop_owner? %>
-  <%= link_to 'My shops', shops_path %>
-<% else %>
-  <%= link_to 'New shop', new_shop_path %>
-<% end %>
-
 <h1>Meals</h1>
 
 <table>
