@@ -23,7 +23,9 @@ FactoryBot.define do
           provider: 'google',
           uid: 12345,
           info: {
-            email: "admin#{n}@ait.asia"
+            email: "admin#{n}@ait.asia",
+            name: "admin#{n}",
+            image: "profile-mock.png"
           },
           credentials: {
             token: "token_admin#{n}",
@@ -34,6 +36,7 @@ FactoryBot.define do
         })
       "admin#{n}@ait.asia"
     end
+    image { "profile-mock.png" }
     roles { [Role.find(3), Role.find(1)] }
   end
 
@@ -46,7 +49,9 @@ FactoryBot.define do
           provider: 'google',
           uid: 12345,
           info: {
-            email: "shop_owner#{n}@ait.asia"
+            email: "shop_owner#{n}@ait.asia",
+            name: "shop_owner#{n}",
+            image: "profile-mock.png"
           },
           credentials: {
             token: "token_shop_owner#{n}",
@@ -57,6 +62,7 @@ FactoryBot.define do
         })
       "shop_owner#{n}@ait.asia"
     end
+    image { "profile-mock.png" }
     roles { [Role.find(3), Role.find(2)] }
   end
 
@@ -69,7 +75,9 @@ FactoryBot.define do
           provider: 'google',
           uid: 12345,
           info: {
-            email: "customer#{n}@ait.asia"
+            email: "customer#{n}@ait.asia",
+            name: "customer#{n}",
+            image: "profile-mock.png"
           },
           credentials: {
             token: "token_customer#{n}",
@@ -80,6 +88,7 @@ FactoryBot.define do
         })
       "customer#{n}@ait.asia"
     end
+    image { "profile-mock.png" }
   end
 
   factory :shop, class: Shop do

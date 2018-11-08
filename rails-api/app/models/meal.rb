@@ -3,4 +3,5 @@ class Meal < ApplicationRecord
   has_many :orders, :dependent => :destroy
   validates :name, presence: true, uniqueness: true
   validates :shop, presence: true
+  has_one_attached :image
 end

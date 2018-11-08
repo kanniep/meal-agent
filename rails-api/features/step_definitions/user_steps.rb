@@ -32,7 +32,7 @@ And("I visit root page") do
 end
 
 And("I should see my information") do
-  expect(page).to have_content "Welcome #{@user.email}! Not you? Sign out"
+  expect(page).to have_content "#{@user.name}"
 end
 
 And("I visit {string} page") do |page_name|
