@@ -36,7 +36,7 @@ Then('I should see details of the meal') do
 end
 
 Then(/^I select meal (\d+)$/) do |meal_num|
-  find_all('td a', text: 'Show').at(meal_num - 1).click
+  find_all('div.caption a', text: 'Show').at(meal_num - 1).click
 end
 
 Then(/^I should see details of meal (\d+)$/) do |meal_num|

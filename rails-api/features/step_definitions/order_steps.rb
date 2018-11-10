@@ -1,5 +1,5 @@
 And(/^I make an order for meal (\d+)$/) do |meal_num|
-  find('tr', text: @meals[meal_num - 1].name).find('td a', text: 'Order').click
+  find('div.caption', text: @meals[meal_num - 1].name).find('a', text: 'Order').click
 end
 
 And(/^there are (\d+) orders for my shop (\d+)$/) do |num_order, shop_num|
@@ -13,21 +13,25 @@ And(/^there are (\d+) orders for my shop (\d+)$/) do |num_order, shop_num|
 end
 
 When(/^I accept order (\d+)$/) do |order_num|
-  find_all('tr', text: "order: #{@orders[order_num - 1].id}").last.find('td a', text: 'Accept').click
+  find_all('tr', text: "order: #{@orders[order_num - 1].id}").last.find('td ul li a', id: "accept-link").click
 end
 
 When(/^I reject order (\d+)$/) do |order_num|
-  find_all('tr', text: "order: #{@orders[order_num - 1].id}").last.find('td a', text: 'Reject').click
+  find_all('tr', text: "order: #{@orders[order_num - 1].id}").last.find('td ul li a', id: "reject-link").click
 end
 
 When(/^I finish preparing order (\d+)$/) do |order_num|
-  find_all('tr', text: "order: #{@orders[order_num - 1].id}").last.find('td a', text: 'Finish').click
+  find_all('tr', text: "order: #{@orders[order_num - 1].id}").last.find('td ul li a', id: "finish-link").click
+end
+
+When("I click receive order {int}") do |order_num|
+  find_all('tr', text: "order: #{@orders[order_num - 1].id}").last.find('td ul li a', id: "receive-link").click
 end
 
 Then("I should see order {int} with status {string}") do |order_num, status|
   find_all('tr', text: "order: #{@orders[order_num - 1].id}").each do |order_tr|
     expect(order_tr).to have_content @orders[order_num - 1].meal.name
-    expect(order_tr).to have_content status
+    expect(order_tr).to have_content status.capitalize
   end
 end
 
@@ -44,10 +48,6 @@ end
 Given("I have ordered meal {int}") do |meal_num|
   order = FactoryBot.create :order, user: @user, meal: @meals[meal_num - 1]
   @orders = [order]
-end
-
-When("I click receive order {int}") do |order_num|
-  find_all('tr', text: "order: #{@orders[order_num - 1].id}").last.find('td a', text: 'Receive').click
 end
 
 Then("I should see order for meal {int}") do |meal_num|

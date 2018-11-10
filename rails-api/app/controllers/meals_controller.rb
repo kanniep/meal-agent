@@ -34,7 +34,7 @@ class MealsController < ApplicationController
   # POST /meals.json
   def create
     @meal = @shop.meals.new(meal_params)
-
+    @meal.image.attach(params[:meal][:image])
     respond_to do |format|
       if @meal.save
         format.html { redirect_to edit_shop_meal_url(@shop, @meal), notice: 'Meal was successfully created.' }

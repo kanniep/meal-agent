@@ -18,6 +18,10 @@ gem 'cancancan'
 gem 'rails_admin'
 gem 'metric_fu'
 gem 'omniauth-google-oauth2'
+gem 'bootstrap'
+gem 'jquery-rails'
+gem 'font-awesome-rails'
+gem "aws-sdk-s3", require: false
 
 gem 'bootsnap', '>= 1.1.0', require: false
 

@@ -1,5 +1,9 @@
 <p id="notice"><%= notice %></p>
 
+<% if @meal.image.attached? %>
+  <%= image_tag @meal.image, class: "img-fluid rounded mx-auto d-block" %>
+<% end %>
+
 <p>
   <strong>Name:</strong>
   <%= @meal.name %>
