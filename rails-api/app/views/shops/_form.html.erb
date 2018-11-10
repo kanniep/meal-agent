@@ -1,37 +1,30 @@
-<%= form_with(model: shop, local: true) do |form| %>
-  <% if shop.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(shop.errors.count, "error") %> prohibited this shop from being saved:</h2>
+<div class="text-center" style="padding:50px 0">
+  <%= form_with(model: shop, local: true, class: "form-horizontal denser") do |f| %>
+    <% if shop.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(shop.errors.count, "error") %> prohibited this shop from being saved:</h2>
 
-      <ul>
-      <% shop.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+        <ul>
+        <% shop.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <fieldset>
+      <div class="form-group control-group string_type">
+        <%= f.text_field :name, class: "col-sm-10 controls", id: "lg_username", placeholder: :name %>
+      </div>
+      <div class="form-group control-group string_type">
+        <%= f.text_field :location, class: "col-sm-10 controls", placeholder: :location %>
+      </div>
+      <div class="form-group control-group string_type">
+        <%= f.text_area :description, class: "col-sm-10 controls", placeholder: :description %>
+      </div>
+    </fieldset>
+    <div class="form-group form-actions">
+      <%= f.submit class: "btn btn-primary" %>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-  </div>
-
-  <div class="field">
-    <%= form.label :location %>
-    <%= form.text_field :location %>
-  </div>
-
-  <div class="field">
-    <%= form.label :description %>
-    <%= form.text_field :description %>
-  </div>
-
-  <div class="field">
-    <%= form.label :user_id %>
-    <%= form.text_field :user_id %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>

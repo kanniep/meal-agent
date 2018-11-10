@@ -71,11 +71,11 @@ Then('I should see details of the shop') do
 end
 
 And(/^I select shop (\d+)$/) do |shop_num|
-  find('tr', text: @shops[shop_num - 1].name).find('td a', text: 'Edit').click
+  find('tr', text: @shops[shop_num - 1].name).find('td ul li a', id: "edit-link").click
 end
 
 And(/^I select my shop (\d+)$/) do |shop_num|
-  find('tr', text: @my_shops[shop_num - 1].name).find('td a', text: 'Edit').click
+  find('tr', text: @my_shops[shop_num - 1].name).find('td ul li a', id: "edit-link").click
 end
 
 When(/^I try to select shop (\d+)$/) do |shop_num|
