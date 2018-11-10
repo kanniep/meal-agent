@@ -32,6 +32,10 @@ Parameters:
     Type: String
   GoogleOauthSecret:
     Type: String
+  AwsID:
+    Type: String
+  AwsSecret:
+    Type: String
   InstanceType:
     Description: EC2 instance type
     Type: String
@@ -154,6 +158,10 @@ Resources:
             Value: !Ref GoogleClientID
           - Name: GOOGLE_OAUTH_SECRET
             Value: !Ref GoogleOauthSecret
+          - Name: MA_AWS_ID
+            Value: !Ref AwsID
+          - Name: MA_AWS_SECRET
+            Value: !Ref AwsSecret
       Volumes:
       - Name: meal-agent-rails-vol
   ECSALB:
