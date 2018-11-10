@@ -41,15 +41,16 @@ class User < ApplicationRecord
 
   def self.from_omniauth(auth)
     # Either create a User record or update it based on the provider (Google) and the UID
-    where(email: auth.info.email).first_or_create do |user|
-      user.name = auth.info.name
-      user.image = auth.info.image
-      user.provider = auth.provider
-      user.uid = auth.uid
-      user.token = auth.credentials.token
-      user.expires = auth.credentials.expires
-      user.expires_at = auth.credentials.expires_at
-      user.refresh_token = auth.credentials.refresh_token
-    end
+    user = where(email: auth.info.email).first_or_create
+    user.name = auth.info.name
+    user.image = auth.info.image
+    user.provider = auth.provider
+    user.uid = auth.uid
+    user.token = auth.credentials.token
+    user.expires = auth.credentials.expires
+    user.expires_at = auth.credentials.expires_at
+    user.refresh_token = auth.credentials.refresh_token
+    user.save
+    return user
   end
 end
