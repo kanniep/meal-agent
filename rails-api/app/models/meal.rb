@@ -4,4 +4,5 @@ class Meal < ApplicationRecord
   validates :name, presence: true, uniqueness: true
   validates :shop, presence: true
   has_one_attached :image
+  validates :image, presence: true
 end

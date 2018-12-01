@@ -1,4 +1,5 @@
 require 'rails_helper'
+include ActionDispatch::TestProcess::FixtureFile
 
 RSpec.describe MealsController, type: :controller do
   include Devise::Test::IntegrationHelpers
@@ -22,7 +23,6 @@ RSpec.describe MealsController, type: :controller do
 
   describe "GET #index" do
     it "returns a success response" do
-      Meal.create! valid_attributes
       get :index, params: {}
       expect(response).to be_successful
       # expect(response).to render_template("index")
@@ -114,7 +114,7 @@ RSpec.describe MealsController, type: :controller do
 
       it "redirects to the meal" do
         put :update, params: {id: @meal.to_param, meal: valid_attributes, shop_id: @shop.id}
-        expect(response).to redirect_to(@meal)
+        expect(response).to redirect_to edit_shop_meal_url(@shop, @meal)
       end
 
       it "returns a redirect, not authorized" do

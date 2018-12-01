@@ -51,10 +51,12 @@ class MealsController < ApplicationController
   def update
     respond_to do |format|
       if @meal.update(meal_params)
-        format.html { redirect_to @meal, notice: 'Meal was successfully updated.' }
-        format.json { render :show, status: :ok, location: @meal }
+        flash[:notice] = 'Meal was successfully updated.'
+        format.html { redirect_to edit_shop_meal_url(@shop, @meal) }
+        format.json { render :index, status: :ok, location: @meal }
       else
-        format.html { render :edit }
+        flash[:alert] = 'Cannot update meal.'
+        format.html { render :edit, error: @meal.errors }
         format.json { render json: @meal.errors, status: :unprocessable_entity }
       end
     end

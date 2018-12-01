@@ -7,14 +7,14 @@
 <div class="container">
   <div class="row">
     <% @meals.each do |meal| %>
-      <div class="col-xs-8 col-sm-6 col-md-3 mt-3">
+      <div class="col-md-4 mt-3 mb-3">
         <div class="thumbnail">
-          <div class="caption">
-            <h4><%= meal.name %></h4>
+          <div class="caption align-middle">
+            <h4 class="mt-4"><%= meal.name %></h4>
             <p><%= meal.price %> Baht</p>
             <p>
               <%= link_to 'Show', meal, class: "label label-default", rel: "tooltip" %>
-              <%= link_to 'Order', orders_path(order: {meal_id: meal}), :method=> :post, class: "label label-default", rel: "tooltip" %>
+              <%= link_to 'Order', orders_path(order: {meal_id: meal}), :method=> :post, data: { confirm: 'Are you sure?' }, class: "label label-default", rel: "tooltip" %>
             </p>
           </div>
           <% if meal.image.attached? %>
@@ -23,6 +23,7 @@
             <%= image_tag "https://via.placeholder.com/250", class: "rounded object-fit_cover" %>
           <% end %>
         </div>
+        <p class="text-center"><%= meal.shop.name %></p>
       </div>
     <% end %>
   </div>

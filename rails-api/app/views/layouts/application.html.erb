@@ -27,18 +27,22 @@
       	<div id="navbarCollapse" class="collapse navbar-collapse justify-content-start">
       		<ul class="nav navbar-nav">
             <li class="nav-item"><%= link_to fa_icon("shopping-cart", text: "Meals"), meals_path, class: "nav-link" %></li>
-            <li class="nav-item"><%= link_to fa_icon("book", text: "Orders"), orders_path, class: "nav-link" %></li>
-      		</ul>
+            <li class="nav-item">
+              <%= link_to orders_path, class: "nav-link", role: "presentation" do %>
+                <%= fa_icon("book") %>Orders<span class="badge"><%= cookies[:num_order_change] %></span>
+              <% end %>
+            </li>
+          </ul>
           <% if user_signed_in? %>
         		<ul class="nav navbar-nav navbar-right ml-auto">
         			<li class="nav-item dropdown">
         				<a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle user-action"><%= image_tag current_user.image, class: "avatar" %> <%= current_user.name %> <b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                  <% if current_user.shop_owner? %>
+                  <li><% if current_user.shop_owner? %>
                     <%= link_to fa_icon("shopping-bag", text: "My Shops"), shops_path, class: "dropdown-item" %>
                   <% else %>
                     <%= link_to fa_icon("shopping-bag", text: "New shop"), new_shop_path, class: "dropdown-item" %>
-                  <% end %>
+                  <% end %></li>
         					<li class="divider dropdown-divider"></li>
                   <li><%= link_to fa_icon("power-off", text: "Logout"), destroy_user_session_path, method: :delete, class: "dropdown-item" %></li>
         				</ul>
@@ -54,15 +58,19 @@
       	</div>
       </div>
     </nav>
-
     <% if flash[:error] %>
-      <div class="alert alert-danger" role="alert">
+      <div class="alert alert-danger alert-dismissible" role="alert">
         <p><%= flash[:error] %></p>
       </div>
     <% end %>
     <% if flash[:alert] %>
-      <div class="alert alert-info" role="alert">
+      <div class="alert alert-warning alert-dismissible" role="alert">
         <p><%= flash[:alert] %></p>
+      </div>
+    <% end %>
+    <% if flash[:notice] %>
+      <div class="alert alert-info alert-dismissible" role="alert">
+        <p><%= flash[:notice] %></p>
       </div>
     <% end %>
 
